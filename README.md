@@ -34,28 +34,4 @@ For IR decoding you'll need [Arduino-IRemote](https://github.com/shirriff/Arduin
 Those sensors come for different frequencies. Most commonly it'll be 38kHz or 36kHz - make sure you have the one wich mathces your remote.
 Chances are it will work either way, but maybe not as reliable.
 
-How does IR actually work? On the most basic level the transmitter (IR LED) either transmits or doesn't transmit. But while it transmits,
-it's not turned on the whole time - it blinks (turns on and off) rapidly, 38.000 times per second!
-
-If you want to transmit information to your friend by turning light on and off, you need to agree in advanced how the information
-is going to be encoded. For example, you could use the morse code.
-
-The same way, the transmitter (the remote) and the receiver need to agree on the protocol to be able to exchange information. One such protocol
-is [RC-5](http://en.wikipedia.org/wiki/RC-5). 
-
-In RC5, bit is represended by _space_ folowed by _mark_. Space means "light off" and mark "light on". Both signals are 889 microseconds long - that's less than 1 millisecond, which is like, really short time. By RC5 standard, the frequency of the blinking should be 36kHz, but many implementations out there us 38kHz.
-
-|space mark| represents bit 1
-
-|mark space| represents bit 0
-
-That's as simple as encoding can be. But sending 1 and 0 doesn't meen much if you don't know what to expect. That's why RC5 code has standardised message protocol, which you cann look up on wiki page.
-
-The Arduino Library we are using is doing all the hard work for us and transforms the incomming blinking into a RC5 code.
-In my case, I'm using:
-- 0x820 and 0x20 for forwards
-- 0x810 and 0x10 for left
-- 0x821 and 0x21 for right
-- 0x811 and 0x11 for backwards
-
-Why those? Because they are assigned the "cursor keys" on my remote. You can use IR library to display codes on your computer and adjust them as needed.
+For more info about IR and a tool to generate RC5 codes, see my [iRwaver mini project](https://github.com/jernejkase/iRwaver/tree/master)
