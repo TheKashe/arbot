@@ -18,7 +18,7 @@ Maybe the proper term is IR remote controlled car with potential to become a rob
 The parts I have came in my posession randomly through different projects. But building a robot - one size doesn't fit all.
 Maybe in the future I'm going to change something - remplace the platform, the motorboard or the way the robot communicates with the outside world.
 
-From the software design point of view it of course means it makes sense to make it modular, and modular means interfaces and implementations. At least as long as the features of the modules remain similar.
+From the software design point of view it makes sense to make it modular, and modular means interfaces and implementations -at least as long as the features of the modules remain similar.
 That's why the arbot is implemented in c++, with classes and inheritance.
 
 At the moment there are just 4 classes:
