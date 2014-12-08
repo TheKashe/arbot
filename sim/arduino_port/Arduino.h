@@ -77,7 +77,7 @@ extern "C" {
 //TODO check
 long random(long howsmall, long howbig)
 {
-  return rand() % (howbig-howsmall+1) + howsmall;
+  return rand() % (howbig-howsmall) + howsmall;
 }
 
 long random(long howbig)

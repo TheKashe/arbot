@@ -297,12 +297,12 @@ private:
 	/*/
 	void finishSequence()
 	{
-		arbotPlatform->fullStop();
-		arbotVma03MdPlatform->terminate();
-
 		int32_t sequenceDuration = millis()-sequenceStartTimestamp;
 		int32_t award;
 		
+		arbotPlatform->fullStop();
+		arbotVma03MdPlatform->terminate();
+
 		if(state==FREE){
 			award=-sequenceDuration; //shorter is better, so let's just mirror it over negative axis
 			EEPROM.write(EEPROM_GENERATION_FREE_CNT,EEPROM.read(EEPROM_GENERATION_FREE_CNT)+1);

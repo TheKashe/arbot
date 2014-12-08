@@ -14,18 +14,20 @@
 //b15		- command for bump(stall) interrupt
 //b16-17    - generation
 //b18-21    - success
+//b22		- reproduction type
 
-#define GENOME_LENGTH			22
+#define GENOME_LENGTH			23 //including 0
 #define GENOME_LAST_CMD_INDEX	14
 #define STALL_GENE_INDEX		15
 #define GENERATION_GENE_INDEX	16
 #define SUCCESS_GENE_INDEX		18
+#define	REPRODUCTION_TYPE_INDEX	22
 
 //genes
 //first 3 bytes are commands
 //last 5 bytes are duration
 #define G_NOP       0b00000000 // no operation
-							   //                  0b00100000
+//                  0b00100000
 #define G_LEFT      0b01000000
 #define G_RIGHT     0b01100000
 #define G_FORWARDS  0b10000000
@@ -39,6 +41,9 @@
 #define TIL_HIT     0b00011111  //move until hit
 
 #define OFFSET (genomeId*GENOME_LENGTH)
+
+#define REPRODUCTION_MUTATION		0
+#define REPRODUCTION_1BY1CROSSOVER	1
 
 class Genome{
 private:
@@ -73,7 +78,7 @@ public:
 		setGeneEx(SUCCESS_GENE_INDEX,success);
 	}
 	
-	byte getGene(byte geneId)
+	byte getGene(byte geneId) const
 	{
 		//no clue what to do if gene is out of bounds??
 		if(geneId>STALL_GENE_INDEX) return 0;
@@ -89,6 +94,19 @@ public:
 	{
 		EEPROM.write(OFFSET+geneId,value);
 	}
+	
+	byte getReproductionType()
+	{
+		uint8_t reproduction;
+		EEPROM_readAnything(OFFSET+REPRODUCTION_TYPE_INDEX, reproduction);
+		return reproduction;
+	}
+	
+	
+	void setReproductionType(byte reproductionType)
+	{
+		setGene(REPRODUCTION_TYPE_INDEX,reproductionType);
+	}
 
 	
 	uint16_t getGeneration()
@@ -103,7 +121,8 @@ public:
 		setGeneEx(OFFSET+GENERATION_GENE_INDEX,generation);
 	}
 	
-	void reset(){
+	void reset()
+	{
 		for(byte geneId=0;geneId<=STALL_GENE_INDEX;geneId++)
 		{
 			setGene(geneId,0);
@@ -145,13 +164,22 @@ public:
 			}
 			setGene(geneId,command | speed);
 		}
+		
+		if(random(0,2)){
+			setReproductionType(REPRODUCTION_MUTATION);
+		}
+		else{
+			setReproductionType(REPRODUCTION_1BY1CROSSOVER);
+		}
 	}
+	
 	
 	void listGenome(char* outStr, size_t strLen)
 	{
-		snprintf(outStr,strLen, "genome:%i,gen:%i,succ:%d::",genomeId,getGeneration(),getSuccess());
+		snprintf(outStr,strLen, "genome:%i,gen:%i,succ:%d,rep:%i::",
+				 genomeId,getGeneration(),getSuccess(),getReproductionType());
 		
-		for(byte geneId=0;geneId<=STALL_GENE_INDEX;geneId++) //we start at interupt command
+		for(byte geneId=0;geneId<=STALL_GENE_INDEX;geneId++)
 		{
 			byte gene=getGene(geneId);
 			byte command=gene & G_MASK;
@@ -177,7 +205,9 @@ public:
 				case G_REVERT:
 					cmd="rev";
 					break;
-					//case 5: command=PAUSE;break; //maybe in the future
+				default:
+					cmd="nop";
+					break;
 			}
 			snprintf(outStr,strLen,"%s%s:%d,",outStr,cmd,time);
 		}
