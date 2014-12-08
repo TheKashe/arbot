@@ -1,0 +1,5 @@
+target remote localhost:4014
+remote get nexe jsbot.bc
+file jsbot.bc
+nacl-irt "/Applications/Google Chrome.app/Contents/Versions/39.0.2171.71/Google Chrome Framework.framework/Internet Plug-Ins/nacl_irt_x86_64.nexe"
+break FreedomController::loop

@@ -1,6 +1,6 @@
 //
 //  ArbotController.h
-//  
+//
 //
 //  Created by Jernej Kaše on 11/20/14.
 //
@@ -13,18 +13,20 @@
 
 class ArbotController{
 protected:
-  ArbotPlatform *arbotPlatform;
+	ArbotPlatform *arbotPlatform;
 public:
-  ArbotController(ArbotPlatform *arbotPlatform){
-    this->arbotPlatform=arbotPlatform;
-  }
+	ArbotController(ArbotPlatform *arbotPlatform){
+		this->arbotPlatform=arbotPlatform;
+	}
+		
+	//all inherited classes must call this, or things will fail to work
+	virtual void setup(){
+		arbotPlatform->setup();
+	}
+	
+	virtual void setStateAfterGenomeSwitch()=0;
 
-  //all inherited classes must call this, or things will fail to work
-  virtual void setup(){
-    arbotPlatform->setup();
-  }
-  
-  virtual void loop() = 0;
+	virtual void loop() = 0;
 };
 
 #endif /* defined(____ArbotController__) */

@@ -1,3 +1,5 @@
+#ifndef ____randomseed__
+#define ____randomseed__
 
 unsigned int bitOut(void)
 {
@@ -21,6 +23,7 @@ unsigned int bitOut(void)
   }
   return bit1;
 }
+
 //------------------------------------------------------------------------------
 unsigned long seedOut(unsigned int noOfBits)
 {
@@ -30,3 +33,12 @@ unsigned long seedOut(unsigned int noOfBits)
     seed = (seed<<1) | bitOut();
   return seed;
 }
+
+//randomize doesn't work very well on arduino HW, this is a way around
+void arduinoRandomize()
+{
+    int seed=seedOut(31);
+    randomSeed(seed);
+}
+
+#endif ____randomseed__

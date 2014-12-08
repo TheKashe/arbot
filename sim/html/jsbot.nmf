@@ -1,0 +1,12 @@
+{
+  "program": {
+    "portable": {
+      "pnacl-translate": {
+        "url": "jsbot.pexe"
+      },
+      "pnacl-debug": {
+        "url": "jsbot.bc"
+      }
+    }
+  }
+}

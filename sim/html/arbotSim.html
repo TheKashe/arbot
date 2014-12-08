@@ -1,0 +1,184 @@
+<!doctype html> 
+<html lang="en"> 
+<head> 
+	<meta charset="UTF-8" />
+	<title>Arduino robot simulator</title>
+	<script type="text/javascript" src="phaser.js"></script>
+    <script type="text/javascript" src="arbotplatform.js"></script>
+    <style type="text/css">
+        body {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="listener">
+        <embed id="jsbot"
+                 width=0 height=0
+                 src="jsbot.nmf"
+                 type="application/x-pnacl" />
+    </div>
+    <div id="generation">-1</div>
+    <div id="genome" >-1</div>
+    <div id="timer">-1</div>
+    <div id="besttime">-1</div>
+    <div id="timeout">-1</div>
+    <div id="raw"></div>
+    <div id="gentimes" style="position:absolute;left:900px;"></div>
+    
+
+<script type="text/javascript">
+
+var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+
+function preload() {
+	game.load.image('sky', 'assets/sky.png');
+    game.load.image('star', 'assets/star.png');
+    game.load.spritesheet('dude', 'assets/r2d232.png', 32, 32);
+    game.load.image('wallH', 'assets/wallH.png');
+    game.load.image('wallV', 'assets/wallV.png');
+    game.stage.disableVisibilityChange = true;
+}
+
+var jsbot;
+var arbotplatform;
+var disableInterrupts=true;
+var walls;
+var stars;
+var player;
+
+function create() {
+	//  The walls group
+    walls = game.add.group();
+    walls.enableBody = true;
+	//  walls....
+	var wall = walls.create(0, game.world.height-30, 'wallH');
+	wall = walls.create(400, game.world.height-30, 'wallH');
+	wall = walls.create(0, 0, 'wallH');
+	wall = walls.create(400, 0, 'wallH');
+	wall = walls.create(0, 0, 'wallV');
+	wall = walls.create(0, 400, 'wallV');
+	wall = walls.create(game.world.width-30, 0, 'wallV');
+	wall = walls.create(game.world.width-30, 400, 'wallV');
+	wall = walls.create(400, game.world.height-30, 'wallH');
+	wall = walls.create(0, 0, 'wallH');
+	wall = walls.create(400, 0, 'wallH');
+    wall = walls.create(400, 400, 'wallH');
+ 	wall = walls.create(-150, 250, 'wallH');
+    walls.setAll('body.immovable', true);
+
+    //star(s)
+    stars = game.add.group();
+    stars.enableBody = true;
+    star = stars.create(game.world.width-60,60,'star');
+
+    //debug stars
+    /*star = stars.create(100,game.world.height - 80,'star');
+    star = stars.create(100,game.world.height - 100,'star');
+    star = stars.create(100,game.world.height - 140,'star');
+    star = stars.create(100,game.world.height - 120,'star');
+    star = stars.create(100,game.world.height - 160,'star');
+    star = stars.create(100,game.world.height - 180,'star');
+    star = stars.create(100,game.world.height - 200,'star');
+    star = stars.create(80,game.world.height - 200,'star');
+    star = stars.create(60,game.world.height - 200,'star');
+    star = stars.create(40,game.world.height - 200,'star');
+	 */
+
+
+	game.physics.startSystem(Phaser.Physics.ARCADE);
+    cursors = game.input.keyboard.createCursorKeys();
+
+    //we use this platform as implementation of message commands
+    
+    jsbot = document.getElementById('jsbot');
+    listenerDiv = document.getElementById('listener');
+    listenerDiv.addEventListener('message', handleMessage, true);
+    jsbot.postMessage('setup');
+	player="";
+	arbotplatform="";
+
+}
+
+function update() {
+	if(!disableInterrupts && player!=""){
+		game.physics.arcade.collide(player, walls, collideCallback);
+		game.physics.arcade.overlap(player, stars, freedomCallback, null, this);
+    }
+	jsbot.postMessage('loop');
+    //game.physics.arcade.overlap(player, stars, freedomCallback, null, this);
+}
+
+function collideCallback()
+{
+    jsbot.postMessage('collided');
+	arbotplatform.fullStop();
+}
+
+//catching a star means the robot is free
+function freedomCallback()
+{
+	//we don't want to send multiple messages to controller in case we found freedom
+	if(disableInterrupts) return;
+	disableInterrupts=true;		//when we are free, wait for the controller to acknowlegde and reset
+    arbotplatform.fullStop();
+	jsbot.postMessage('free');
+}
+
+function handleMessage(message_event) {
+    if(message_event.data=="FWD") {
+        arbotplatform.forwards(100);
+        return;
+    }
+    if(message_event.data=="BCK") {
+        arbotplatform.backwards(100);
+        return;
+    }
+    if(message_event.data=="LFT") {
+        arbotplatform.left(100);
+        return;
+    }
+    if(message_event.data=="RGH") {
+        arbotplatform.right(100);
+        return;
+    }
+    if(message_event.data=="STOP") {
+        arbotplatform.fullStop();
+        return;
+    }
+    if(message_event.data=="TRM") {
+		if(arbotplatform=="") return;
+        
+		//it seems the only reliable method of moving player is deleting and recreating it
+		player.destroy(true);
+		player="";
+		arbotplatform="";
+        return;
+    }
+	if(message_event.data=="INI") {
+		//as moving player is VERY unreliable, the only working solution is to
+		//create new player on every sequence start
+		//controller will send GOO command then sleep for some seconds, then start emitting commands
+        disableInterrupts=false;
+		player = game.add.sprite(64, game.world.height - 150, 'dude');
+		player.anchor.setTo(0.5, 0.5);
+		game.physics.arcade.enable(player);
+		arbotplatform = new ArbotPhaserPlatform(player);
+        return;
+    }
+    var msg_array = message_event.data.split(';');
+    if(msg_array[0]=="DIAG"){
+		if(msg_array[1]=="gentimes")
+		{
+			document.getElementById(msg_array[1]).innerHTML = document.getElementById(msg_array[1]).innerHTML+msg_array[2];
+		}else{
+			document.getElementById(msg_array[1]).innerHTML = msg_array[2];
+		}
+		return;
+    }
+}
+
+</script>
+
+</body>
+</html>
