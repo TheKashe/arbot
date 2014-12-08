@@ -5,29 +5,26 @@
 //  Created by Jernej Kaše on 11/20/14.
 //
 //
-
-#include "ArbotPlatform.h"
-#include <IRremote.h>
-
 #ifndef ____IrController__
 #define ____IrController__
 
-class IrController{
-  ArbotPlatform *arbotPlatform;
+#include "ArbotController.h"
+#include <IRremote.h>
+
+class IrController : public ArbotController{
   IRrecv *irrecv;
   unsigned long lastCommandTimestamp; //when did we receive last IR command
   unsigned int noCommandTimout;
 public:
-  IrController(ArbotPlatform *arbotPlatform, char recvPin=11, unsigned int noCommandTimout=100){
-    this->arbotPlatform=arbotPlatform;
+  IrController(ArbotPlatform *arbotPlatform, char recvPin=11, unsigned int noCommandTimout=100):ArbotController(arbotPlatform){
     this->irrecv = new IRrecv(recvPin);
     lastCommandTimestamp=millis();
     this->noCommandTimout=noCommandTimout;
   }
 
   virtual void setup(){
+    ArbotController::setup();
     irrecv->enableIRIn(); // Start the receiver
-    arbotPlatform->setup();
   }
   
   virtual void loop(){

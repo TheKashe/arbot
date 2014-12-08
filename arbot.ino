@@ -1,6 +1,7 @@
-#include "ArbotVMA03Platform.h"
-#include <IRremote.h> // no clue why, but if it's not included here, it doesn't compile 
-#include "IrController.h"
+#include "ArbotVMA03MDPlatform.h"
+#include "FreedomController.h"
+
+#include <EEPROM.h>
 
 //definitions for controller
 #define IR_PIN         11      //where is the IR sensor connected
@@ -12,10 +13,10 @@
 #define DIR_A 4
 #define DIR_B 8
 
-IrController *controller=new IrController(new ArbotVMA03Platform(),IR_PIN,NO_COMMAND_TIMEOUT);
+ArbotController *controller=new FreedomController(new ArbotVMA03MDPlatform(PWM_A,PWM_B,DIR_A,DIR_B));
 
-void setup()
-{
+void setup(){
+  Serial.begin(9600);
   controller->setup();
 }
 

@@ -5,11 +5,10 @@
 //  Created by Jernej Kaše on 11/20/14.
 //
 //
-
-#include "Arduino.h"
-
 #ifndef ____ArbotPlatform__
 #define ____ArbotPlatform__
+
+#include "Arduino.h"
 
 class ArbotPlatform{
 protected: 

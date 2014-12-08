@@ -53,14 +53,14 @@ public:
       digitalWrite(dir_a, LOW); 
       digitalWrite(dir_b, HIGH);  
       analogWrite(pwm_a, 255*100/speed);
-      analogWrite(pwm_b, 200*100/speed);  
+      analogWrite(pwm_b, 255*100/speed);  
     }
     
     virtual void right(unsigned char speed){
       speed = normalizeSpeed(speed);
       digitalWrite(dir_a, HIGH); 
       digitalWrite(dir_b, LOW);  
-      analogWrite(pwm_a, 200*100/speed);
+      analogWrite(pwm_a, 255*100/speed);
       analogWrite(pwm_b, 255*100/speed); 
     }
     
