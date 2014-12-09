@@ -93,6 +93,8 @@ public:
 				case REPRODUCTION_1BY1CROSSOVER:
 					reproduceGeneByGeneCrossover(&mom, &dad, &kid);
 					break;
+				case REPRODUCTION_POINTCROSSOVER:
+					reproduceRandomPointCrossover(&mom, &dad, &kid);
 				default:
 					reproduceWithMutation(&mom, &dad, &kid);
 					break;
@@ -177,6 +179,30 @@ private:
 			}
 			else {
 				k_gene=(d_gene & G_MASK) |( m_gene & T_MASK);
+			}
+			kid->setGene(geneId,mutateGene(k_gene,5));
+		}
+		
+	}
+	
+	/* randomly pick mom's or dad's gene
+	 */
+	static void reproduceRandomPointCrossover(const Genome *mom,
+											 const Genome *dad,
+											 Genome *kid)
+	{
+		DEBUG_STDOUT("\nReproducint with gene by gene crossover and 5% mutation\n");
+		
+		byte crossoverPoint=random(0,STALL_GENE_INDEX);
+		for(byte geneId=0;geneId<=STALL_GENE_INDEX;geneId++)
+		{
+			byte m_gene=mom->getGene(geneId);
+			byte d_gene=dad->getGene(geneId);
+			byte k_gene;
+			if(geneId<crossoverPoint){
+				k_gene=m_gene;			}
+			else {
+				k_gene=d_gene;
 			}
 			kid->setGene(geneId,mutateGene(k_gene,5));
 		}

@@ -44,6 +44,7 @@
 
 #define REPRODUCTION_MUTATION		0
 #define REPRODUCTION_1BY1CROSSOVER	1
+#define REPRODUCTION_POINTCROSSOVER	2
 
 class Genome{
 private:
@@ -165,12 +166,9 @@ public:
 			setGene(geneId,command | speed);
 		}
 		
-		if(random(0,2)){
-			setReproductionType(REPRODUCTION_MUTATION);
-		}
-		else{
-			setReproductionType(REPRODUCTION_1BY1CROSSOVER);
-		}
+		//set random reproduction type
+		byte dice=random(0,3);
+		setReproductionType(dice);
 	}
 	
 	
