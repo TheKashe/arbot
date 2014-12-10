@@ -32,9 +32,9 @@
 var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 
 function preload() {
-	game.load.image('sky', 'assets/sky.png');
-    game.load.image('star', 'assets/star.png');
+	game.load.image('star', 'assets/star.png');
     game.load.spritesheet('dude', 'assets/r2d232.png', 32, 32);
+	game.load.spritesheet('ball', 'assets/ball.png', 24, 24);
     game.load.image('wallH', 'assets/wallH.png');
     game.load.image('wallV', 'assets/wallV.png');
     game.stage.disableVisibilityChange = true;
@@ -98,7 +98,14 @@ function create() {
 	player = game.add.sprite(64, game.world.height - 150,'dude');
 	player.anchor.setTo(0.5, 0.5);
 	game.physics.arcade.enable(player);
+	ball = game.add.sprite(64, game.world.height - 150,'ball');
+	ball.anchor.setTo(0.5, 0.5);
+	game.physics.arcade.enable(ball);
+	ball.kill();//we don't need it just yet
 	arbotplatform = new ArbotPhaserPlatform(player);
+	
+	
+	
 
 }
 
@@ -107,14 +114,24 @@ function update() {
 		game.physics.arcade.collide(player, walls, collideCallback);
 		game.physics.arcade.overlap(player, stars, freedomCallback, null, this);
     }
+	if(ball.exists){
+		game.physics.arcade.collide(ball, walls, ballCollideCallback);
+    }
 	jsbot.postMessage('loop');
-    //game.physics.arcade.overlap(player, stars, freedomCallback, null, this);
+	//game.physics.arcade.overlap(player, stars, freedomCallback, null, this);
 }
 
 function collideCallback()
 {
     jsbot.postMessage('collided');
 	arbotplatform.fullStop();
+}
+
+function ballCollideCallback()
+{
+	var d=new Date;
+	ball.kill();
+	jsbot.postMessage('pingback');
 }
 
 //catching a star means the robot is free
@@ -128,6 +145,16 @@ function freedomCallback()
 }
 
 function handleMessage(message_event) {
+	if(message_event.data=="PNG"){
+		if(ball.exists) return; //don't ping twice
+		ball.reset(player.x,player.y);	//start in the centre and direction of player
+		ball.body.rotation=player.body.rotation
+		ball.body.velocity.x = Math.cos(toRadians(ball.body.rotation))*2000;
+		ball.body.velocity.y = Math.sin(toRadians(ball.body.rotation))*2000;
+		var d=new Date();
+		ballTimer=d.getMilliseconds();
+		return;
+	}
     if(message_event.data=="FWD") {
         arbotplatform.forwards(100);
         return;

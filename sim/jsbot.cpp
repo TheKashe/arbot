@@ -68,6 +68,11 @@ public:
 			return;
 		}
 		
+		if(message == "pingback"){
+			platform->pingback();
+			return;
+		}
+		
 		if(message == "loop"){
 			controller->loop();
 			return;

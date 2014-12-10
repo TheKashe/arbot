@@ -81,6 +81,18 @@ public:
 		Serial.println(diag);
 	}
 	
+	virtual void ping(){
+		
+	}
+	
+	virtual void pingback(){
+		
+	}
+	
+	virtual uint16_t getPingReply(){
+		return 0;
+	};
+	
 	virtual boolean isFree(){
 		return _isFree;
 	}

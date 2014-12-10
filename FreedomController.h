@@ -24,15 +24,17 @@
 #define STARTING			0
 #define NEXT_SEQUENCE		1
 #define NEXT_LOOP			2
-#define THINKING			3
-#define MOVING				4
-#define STALLED				5
-#define DONE_MOVE			6
-#define SEQUENCE_TIMEOUT	7
-#define SEQUENCE_DONE		8
-#define GENERATION_DONE		9
-#define SLEEP				10
-#define FREE					255
+#define PINGING				3
+#define	DONE_PING			4
+#define THINKING			5
+#define MOVING				6
+#define STALLED				7
+#define DONE_MOVE			8
+#define SEQUENCE_TIMEOUT	9
+#define SEQUENCE_DONE		10
+#define GENERATION_DONE		11
+#define SLEEP				12
+#define FREE				255
 
 //some constants for eeprom locations
 #define EEPROM_CURRENT_GENOMEID_ADDR     1023
@@ -50,6 +52,7 @@ private:
 	uint16_t			moveTimeout;			//is the absolute move timeout, regardless of timer
 	uint32_t			startedMovingTimestamp;
 	uint32_t			sequenceStartTimestamp;
+	uint16_t			pingbackTime;
 	byte				currentGenomeId;
 	Genome*				currentGenome;
 	byte				currentStep;
@@ -129,6 +132,12 @@ public:
 				initLoop();
 				break;
 			case DONE_MOVE:
+				ping();
+				break;
+			case PINGING:
+				checkPingback();
+				break;
+			case DONE_PING:
 				think();
 				break;
 			case THINKING:
@@ -191,6 +200,20 @@ private:
 		if(checkForSequenceTimeout())return; //return is just in case we add somethign below
 	}
 	
+	void ping(){
+		arbotPlatform->fullStop();			//just to be sure
+		arbotVma03MdPlatform->ping();			//just to be sure
+		state=PINGING;
+	}
+	
+	void checkPingback(){
+		pingbackTime=arbotVma03MdPlatform->getPingReply();
+		if(pingbackTime==PING_WAITING){
+			state=PINGING;
+			return;
+		}
+		state=DONE_PING;
+	}
 	
 	void think()
 	{

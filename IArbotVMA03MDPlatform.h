@@ -27,6 +27,10 @@ public:
     virtual void terminate()=0;
     virtual boolean isFree()=0;
     virtual void showDiagnostics(const char*)=0;
+	virtual void ping()=0;
+	virtual void pingback()=0;			//this is probably only useful for simulator - we need to get info when the ping is back
+	virtual uint16_t getPingReply()=0;
+	
 	
 	
 	
