@@ -95,13 +95,15 @@ function create() {
     listenerDiv = document.getElementById('listener');
     listenerDiv.addEventListener('message', handleMessage, true);
     jsbot.postMessage('setup');
-	player="";
-	arbotplatform="";
+	player = game.add.sprite(64, game.world.height - 150,'dude');
+	player.anchor.setTo(0.5, 0.5);
+	game.physics.arcade.enable(player);
+	arbotplatform = new ArbotPhaserPlatform(player);
 
 }
 
 function update() {
-	if(!disableInterrupts && player!=""){
+	if(!disableInterrupts && player.exists){
 		game.physics.arcade.collide(player, walls, collideCallback);
 		game.physics.arcade.overlap(player, stars, freedomCallback, null, this);
     }
@@ -147,12 +149,8 @@ function handleMessage(message_event) {
         return;
     }
     if(message_event.data=="TRM") {
-		if(arbotplatform=="") return;
-        
-		//it seems the only reliable method of moving player is deleting and recreating it
-		player.destroy(true);
-		player="";
-		arbotplatform="";
+		if(!player.exists) return;
+        player.kill();
         return;
     }
 	if(message_event.data=="INI") {
@@ -160,10 +158,7 @@ function handleMessage(message_event) {
 		//create new player on every sequence start
 		//controller will send GOO command then sleep for some seconds, then start emitting commands
         disableInterrupts=false;
-		player = game.add.sprite(64, game.world.height - 150, 'dude');
-		player.anchor.setTo(0.5, 0.5);
-		game.physics.arcade.enable(player);
-		arbotplatform = new ArbotPhaserPlatform(player);
+		player.reset(64, game.world.height - 150);
         return;
     }
     var msg_array = message_event.data.split(';');
