@@ -42,18 +42,21 @@ public:
 			genome.listGenome(genomeListing,sizeof(genomeListing));
 			STDOUTLN(genomeListing);
 		}
-		/*
-		qsort(genomes, Population::getPopulationSize(), sizeof(struct genome), genome_cmp_desc);
-		Serial.println(" ");
-		for(byte i=0; i<Population::getPopulationSize();i++)
+	}
+	
+	static void listPopulationSorted(){
+		Genome genomes[POPULATION_SIZE];
+		for(byte genomeId=0;genomeId<Population::getPopulationSize();genomeId++)
 		{
-			Serial.print("genome:");
-			Serial.print(genomes[i].genome);
-			Serial.print(", health:");
-			Serial.print(genomes[i].health);
-			Serial.print(", success:");
-			Serial.println(genomes[i].success);
-		}*/
+			genomes[genomeId].genomeId=genomeId;
+		}
+		qsort(&genomes[0], POPULATION_SIZE, sizeof(Genome), genome_cmp_desc);
+		for(byte genomeId=0;genomeId<Population::getPopulationSize();genomeId++)
+		{
+			char genomeListing[200];
+			genomes[genomeId].listGenome(genomeListing,sizeof(genomeListing));
+			STDOUTLN(genomeListing);
+		}
 	}
 	
 	
@@ -63,13 +66,16 @@ public:
 		
 		//sort by success
 		Genome genomes[POPULATION_SIZE];
-		for(byte genomeId=0; genomeId<POPULATION_SIZE;genomeId++)
+		for(byte genomeId=0;genomeId<Population::getPopulationSize();genomeId++)
 		{
 			genomes[genomeId].genomeId=genomeId;
 		}
 		qsort(&genomes[0], POPULATION_SIZE, sizeof(Genome), genome_cmp_desc);
+#ifdef DEBUG
 		DEBUG_STDOUT("sorted\n");
-		
+		DEBUG_STDOUT("genome rankings:\n");
+		listPopulationSorted();
+#endif
 		//this is the value we return to the caller
 		//not really related to evolution, but we don't want to sort the array twice, so..
 		uint32_t mediumTime=-(genomes[POPULATION_SIZE/2].getSuccess());//success is negative, time is positive
@@ -114,6 +120,10 @@ public:
 			DEBUG_STDOUT("\n");
 #endif
 		}
+#ifdef DEBUG
+		DEBUG_STDOUT("\n\nNew generation:\n");
+		listPopulation();
+#endif
 		return mediumTime;
 	}
 private:

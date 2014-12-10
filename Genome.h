@@ -16,12 +16,13 @@
 //b18-21    - success
 //b22		- reproduction type
 
-#define GENOME_LENGTH			23 //including 0
-#define GENOME_LAST_CMD_INDEX	14
-#define STALL_GENE_INDEX		15
-#define GENERATION_GENE_INDEX	16
-#define SUCCESS_GENE_INDEX		18
-#define	REPRODUCTION_TYPE_INDEX	22
+
+#define GENOME_LAST_CMD_INDEX	4								// by changing this number we actually controll number of genes in genome
+#define STALL_GENE_INDEX		(GENOME_LAST_CMD_INDEX + 1)
+#define GENERATION_GENE_INDEX	(STALL_GENE_INDEX + 1)			// stall is 1 bytes
+#define SUCCESS_GENE_INDEX		(GENERATION_GENE_INDEX+2)		// generation is 2 bytes
+#define	REPRODUCTION_TYPE_INDEX	(SUCCESS_GENE_INDEX + 4)		// success is 4 bytes
+#define GENOME_LENGTH			(REPRODUCTION_TYPE_INDEX + 1)	// reproduction is 1 byte
 
 //genes
 //first 3 bytes are commands
@@ -112,14 +113,14 @@ public:
 	
 	uint16_t getGeneration()
 	{
-		uint16_t generation=0;
+		uint16_t generation;
 		EEPROM_readAnything(OFFSET+GENERATION_GENE_INDEX, generation);
 		return generation;
 	}
 	
 	void setGeneration(uint16_t generation)
 	{
-		setGeneEx(OFFSET+GENERATION_GENE_INDEX,generation);
+		setGeneEx(GENERATION_GENE_INDEX,generation);
 	}
 	
 	void reset()
