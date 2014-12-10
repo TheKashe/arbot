@@ -1,7 +1,7 @@
 #ifndef ____JSBot__
 #define ____JSBot__
 
-//#define DEBUG 1
+#define DEBUG 1
 
 #include "Debug.h"
 
@@ -37,8 +37,8 @@ public:
 		platform = new ArbotSimulatorPlatform(this);
 		controller=new SimulatorController(platform); //sim controller has 150ms timer step
 		Population::seedPopulation();
+		Population::listPopulation();
 		controller->reset(600000); //let's use 10 minutes for sequence timeout
-		
 	}
 	virtual ~JSBotInstance() {}
 	
