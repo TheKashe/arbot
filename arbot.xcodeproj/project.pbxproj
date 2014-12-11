@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXFileReference section */
+		1965A0BC1A38F58500638AEC /* Neuron.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Neuron.h; sourceTree = "<group>"; };
+		1965A0BD1A39C51F00638AEC /* NeuralNetwork.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NeuralNetwork.h; sourceTree = "<group>"; };
 		19C391EA1A36350700601B37 /* arbot.ino */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = arbot.ino; sourceTree = "<group>"; };
 		19C391EB1A36350700601B37 /* ArbotController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArbotController.h; sourceTree = "<group>"; };
 		19C391EC1A36350700601B37 /* ArbotPlatform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArbotPlatform.h; sourceTree = "<group>"; };
@@ -49,6 +51,8 @@
 		1944F8A81A3630030068ECE8 = {
 			isa = PBXGroup;
 			children = (
+				1965A0BD1A39C51F00638AEC /* NeuralNetwork.h */,
+				1965A0BC1A38F58500638AEC /* Neuron.h */,
 				19C391F81A36352B00601B37 /* sim */,
 				19C391EA1A36350700601B37 /* arbot.ino */,
 				19C391EB1A36350700601B37 /* ArbotController.h */,
