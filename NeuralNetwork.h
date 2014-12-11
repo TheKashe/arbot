@@ -10,6 +10,7 @@
 #ifndef arbot_NeuralNetwork_h
 #define arbot_NeuralNetwork_h
 
+
 #include "Neuron.h"
 
 class NeuralNetwork{
@@ -19,7 +20,9 @@ private:
 	Neuron outputsLayer[2];
 	Neuron* pNeurons[3];
 public:
-	NeuralNetwork(){
+	NeuralNetwork(){}
+	
+	NeuralNetwork(float weights[]){
 		outputsLayer[0].init(2,0);
 		outputsLayer[1].init(2,0);
 		 
@@ -40,6 +43,7 @@ public:
 
 		reset(); //just to be sure
 	}
+	virtual ~NeuralNetwork(){}
 	
 	byte getLevelCount()
 	{
@@ -101,7 +105,7 @@ public:
 	void getOutputs(float *outputs, byte size){
 		if(size!=2) return;
 		for(int i=0;i<2;i++){
-			outputs[i]=outputsLayer[i].getOutput();
+			outputs[i]=Neuron::transferLinear10(outputsLayer[i].getOutput());
 		}
 	}
 	

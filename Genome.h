@@ -9,37 +9,20 @@
 #ifndef _Genome_h
 #define _Genome_h
 
+#include "IGenome.h"
+
+
 //genome structure, bytes:
-//b0-b14	- commands
-//b15		- command for bump(stall) interrupt
-//b16-17    - generation
-//b18-21    - success
-//b22		- reproduction type
+//b0-bx		- genes of type T
+//b16-17    - generation,			uint16
+//b18-21    - success,				uint32
+//b22		- reproduction type,	byte
 
-
-#define GENOME_LAST_CMD_INDEX	4								// by changing this number we actually controll number of genes in genome
-#define STALL_GENE_INDEX		(GENOME_LAST_CMD_INDEX + 1)
-#define GENERATION_GENE_INDEX	(STALL_GENE_INDEX + 1)			// stall is 1 bytes
+#define GENERATION_GENE_INDEX	(geneSize*length)
 #define SUCCESS_GENE_INDEX		(GENERATION_GENE_INDEX+2)		// generation is 2 bytes
 #define	REPRODUCTION_TYPE_INDEX	(SUCCESS_GENE_INDEX + 4)		// success is 4 bytes
-#define GENOME_LENGTH			(REPRODUCTION_TYPE_INDEX + 1)	// reproduction is 1 byte
+#define	GENOME_LENGTH			(REPRODUCTION_TYPE_INDEX+1)		// reproduction type is 1 byte
 
-//genes
-//first 3 bytes are commands
-//last 5 bytes are duration
-#define G_NOP       0b00000000 // no operation
-//                  0b00100000
-#define G_LEFT      0b01000000
-#define G_RIGHT     0b01100000
-#define G_FORWARDS  0b10000000
-#define G_BACKWARDS 0b10100000
-#define G_REVERT    0b11000000
-//#define G_PAUSE     0b11100000 //not implemented
-
-#define G_MASK      0b11100000
-#define T_MASK      0b00011111
-//define subcommands / speed
-#define TIL_HIT     0b00011111  //move until hit
 
 #define OFFSET (genomeId*GENOME_LENGTH)
 
@@ -47,24 +30,33 @@
 #define REPRODUCTION_1BY1CROSSOVER	1
 #define REPRODUCTION_POINTCROSSOVER	2
 
-class Genome{
+template <class T>
+class Genome:public virtual IGenome{
 private:
 public:
-	int32_t success;
 	byte genomeId;
+	byte geneSize;	//size of a single gene, 1-4 bytes
+	byte length;	//
 	
 	Genome()
 	{
+		geneSize=sizeof(T);
 	}
 	
 	explicit Genome(byte genomeId)
 	{
 		this->genomeId=genomeId;
 		success=getSuccess();
+		geneSize=sizeof(T);
 	}
 	
 	virtual ~Genome()
 	{
+	}
+	
+	virtual byte getLength() const
+	{
+		return length;
 	}
 	
 	int32_t getSuccess(){
@@ -74,27 +66,24 @@ public:
 		return success;
 	}
 	
-	void setSuccess(int32_t success)
+	virtual void setSuccess(int32_t success)
 	{
 		this->success=success;
-		setGeneEx(SUCCESS_GENE_INDEX,success);
+		setGene(SUCCESS_GENE_INDEX,success);
 	}
 	
-	byte getGene(byte geneId) const
+	T getGene(byte geneId) const
 	{
 		//no clue what to do if gene is out of bounds??
-		if(geneId>STALL_GENE_INDEX) return 0;
-		return EEPROM.read(OFFSET+geneId);
+		if(geneId>=length) return 0;
+		T value;
+		EEPROM_readAnything(OFFSET+geneId, value);
+		return value;
 	}
 	
-	byte getStallGene()
+	void setGene(byte geneId, T value)
 	{
-		return getGene(STALL_GENE_INDEX);
-	}
-	
-	void setGene(byte geneId, byte value)
-	{
-		EEPROM.write(OFFSET+geneId,value);
+		EEPROM_writeAnything(OFFSET+geneId,value);
 	}
 	
 	byte getReproductionType()
@@ -120,14 +109,15 @@ public:
 	
 	void setGeneration(uint16_t generation)
 	{
-		setGeneEx(GENERATION_GENE_INDEX,generation);
+		setGene(GENERATION_GENE_INDEX,generation);
 	}
 	
-	void reset()
+	virtual void reset()
 	{
-		for(byte geneId=0;geneId<=STALL_GENE_INDEX;geneId++)
+		T zero=0;
+		for(byte geneId=0;geneId<length;geneId++)
 		{
-			setGene(geneId,0);
+			setGene(geneId,zero);
 		}
 		//b16-17    - generation
 		setGeneration(0);
@@ -137,87 +127,102 @@ public:
 	}
 	
 	/*/ Generates random genome */
-	void seedGenome()
+	virtual void seedGenome()=0;
+	
+
+	
+	/* duplicat mom's genome with random mutations.
+	 * dad's genome is ignored
+	 */
+	static void reproduceWithMutation(const Genome *mom,
+									  const Genome *dad,
+									  Genome *kid)
 	{
-		Serial.print("seeding genome:");
-		Serial.println(genomeId);
+		DEBUG_STDOUT("\nReproducint with 10% mutation\n");
+		for(byte geneId=0;geneId<mom->getLength();geneId++)
+		{
+			T gene=mom->getGene(geneId);
+			kid->setGene(geneId,mutateGene(gene,10));
+		}
 		
-		reset(); //zero out and set initial values
+	}
+	
+	
+	/* randomly pick mom's or dad's gene
+	 */
+	/*static void reproduceRandomPointCrossover(const Genome *mom,
+									   const Genome *dad,
+											 Genome *kid)
+	{
+		DEBUG_STDOUT("\nReproducint with gene by gene crossover and 5% mutation\n");
 		
+		byte crossoverPoint=random(0,mom->getLength());
+		for(byte geneId=0;geneId<mom->getLength();geneId++)
+		{
+			T m_gene=mom->getGene(geneId);
+			T d_gene=dad->getGene(geneId);
+			T k_gene;
+			if(geneId<crossoverPoint){
+				k_gene=m_gene;			}
+			else {
+				k_gene=d_gene;
+			}
+			kid->setGene(geneId,mutateGene(k_gene,5));
+		}
+		
+	}
+	
+	
+	virtual void reproduceGeneByGeneCrossover(const Genome *mom,
+											 const Genome *dad,
+											 Genome *kid)
+	{
+		DEBUG_STDOUT("\nReproducint with gene by gene crossover and 5% mutation\n");
 		for(byte geneId=0;geneId<=STALL_GENE_INDEX;geneId++)
 		{
-			byte command;
-			byte speed;
-			
-			//throw the dice for command
-			int dice=1;
-			while(dice==0 || dice==1 || dice==7){ //commands 0b001 and 0b111 is not implemented at the moment and let's ignore NOP
-				dice = random(0,8);
-			}
-			command	= dice<<5; //simply shift dice by 5 to get to the command
-			
-			//throw dice foc time
-			dice	= random(0,2);
-			if(dice==0 && !(command==G_LEFT ||command==G_RIGHT)){ //don't allow unlimited circling
-				speed = TIL_HIT;
+			T m_gene=mom->getGene(geneId);
+			T d_gene=dad->getGene(geneId);
+			T  k_gene;
+			if(random(0,2)){
+				k_gene=(m_gene & G_MASK) | (d_gene & T_MASK);
 			}
 			else {
-				speed = random(0,31);
+				k_gene=(d_gene & G_MASK) |( m_gene & T_MASK);
 			}
-			setGene(geneId,command | speed);
+			kid->setGene(geneId,mutateGene(k_gene,5));
 		}
 		
-		//set random reproduction type
-		byte dice=random(0,3);
-		setReproductionType(dice);
-	}
+	}*/
 	
-	
-	void listGenome(char* outStr, size_t strLen)
+	static T mutateGene(T gene, const byte probability)
 	{
-		snprintf(outStr,strLen, "genome:%i,gen:%i,succ:%d,rep:%i::",
-				 genomeId,getGeneration(),getSuccess(),getReproductionType());
-		
-		for(byte geneId=0;geneId<=STALL_GENE_INDEX;geneId++)
-		{
-			byte gene=getGene(geneId);
+		if(probability==0)
+			return gene;
+		byte dice=random(0,100/probability);
+		if(dice==0){
+/*#ifdef DEBUG
 			byte command=gene & G_MASK;
 			byte time=gene & T_MASK;
-			
-			const char* cmd;
-			switch(command){
-				case G_FORWARDS:
-					cmd="fwd";
-					break;
-				case G_BACKWARDS:
-					cmd="bck";
-					break;
-				case G_LEFT:
-					cmd="lft";
-					break;
-				case G_RIGHT:
-					cmd="rgh";
-					break;
-				case G_NOP:
-					cmd="nop";
-					break;
-				case G_REVERT:
-					cmd="rev";
-					break;
-				default:
-					cmd="nop";
-					break;
-			}
-			snprintf(outStr,strLen,"%s%s:%d,",outStr,cmd,time);
+			DEBUG_STDOUT("MUTATING");
+			DEBUG_STDOUT((int)command);
+			DEBUG_STDOUT(",");
+			DEBUG_STDOUT((int)time);
+			DEBUG_STDOUT("-->");
+#endif*/
+			dice=random(0,sizeof(T));
+			gene ^= 1 << dice; //this should randomly flip a single bit
+/*#ifdef DEBUG
+			command=gene & G_MASK;
+			time=gene & T_MASK;
+			DEBUG_STDOUT((int)command);
+			DEBUG_STDOUT(",");
+			DEBUG_STDOUT((int)time);
+			DEBUG_STDOUT("\n");
+#endif*/
 		}
+		return gene;
 	}
 	
-private:
-	template <class T> void setGeneEx(int geneId, const T& value)
-	{
-		EEPROM_writeAnything(OFFSET+geneId, value);
-	}
-		
 };
 
 //compare genomes for sort
@@ -225,8 +230,8 @@ private:
 //but we can use the metods to load the value to success, so...
 int genome_cmp_desc(const void *a, const void *b)
 {
-	Genome *ia = (Genome*)a;
-	Genome *ib = (Genome*)b;
+	IGenome *ia = (IGenome*)a;
+	IGenome *ib = (IGenome*)b;
 	ib->getSuccess();
 	ia->getSuccess();
 	//we could overflow int here...

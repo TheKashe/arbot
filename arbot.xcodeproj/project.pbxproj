@@ -9,6 +9,8 @@
 /* Begin PBXFileReference section */
 		1965A0BC1A38F58500638AEC /* Neuron.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Neuron.h; sourceTree = "<group>"; };
 		1965A0BD1A39C51F00638AEC /* NeuralNetwork.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NeuralNetwork.h; sourceTree = "<group>"; };
+		1988CEB51A3A315C00EEA7FC /* GeneticGenome.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeneticGenome.h; sourceTree = "<group>"; };
+		1988CEB61A3A36E900EEA7FC /* IGenome.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IGenome.h; sourceTree = "<group>"; };
 		19C391EA1A36350700601B37 /* arbot.ino */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = arbot.ino; sourceTree = "<group>"; };
 		19C391EB1A36350700601B37 /* ArbotController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArbotController.h; sourceTree = "<group>"; };
 		19C391EC1A36350700601B37 /* ArbotPlatform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArbotPlatform.h; sourceTree = "<group>"; };
@@ -64,6 +66,8 @@
 				19C391F11A36350700601B37 /* EEPROMAnything.h */,
 				19C391F21A36350700601B37 /* FreedomController.h */,
 				19C391F31A36350700601B37 /* Genome.h */,
+				1988CEB61A3A36E900EEA7FC /* IGenome.h */,
+				1988CEB51A3A315C00EEA7FC /* GeneticGenome.h */,
 				19C391F41A36350700601B37 /* IArbotVMA03MDPlatform.h */,
 				19C391F51A36350700601B37 /* Population.h */,
 				19C391F61A36350700601B37 /* randomseed.h */,

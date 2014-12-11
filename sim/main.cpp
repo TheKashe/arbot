@@ -34,16 +34,20 @@
 
 int main()
 {
-	NeuralNetwork net;
 	
 	float weights[6]={/*l2n1*/0.525157,/*l2n2*/0.804601,/*l3n1*/0.183411,0.014265,/*l3n2*/0.387660,0.371998};
+	NeuralNetwork net(weights);
+
 	net.setWeights(weights);
 	
 	float inputs[]={(float)2.602};
 	float outputs[2];
-	net.setInputs(inputs,1);
-	net.calculate();
-	net.getOutputs(&outputs[0],2);
+	for(long i=0;i<10000000;i++){
+		net.reset();
+		net.setInputs(inputs,1);
+		net.calculate();
+		net.getOutputs(&outputs[0],2);
+	}
 	return 0;
 }
 

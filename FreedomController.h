@@ -14,8 +14,9 @@
 
 #include "ArbotController.h"
 #include "IArbotVMA03MDPlatform.h"
-#include "Genome.h"
+#include "GeneticGenome.h"
 #include "Population.h"
+#include "NeuralNetwork.h"
 
 #define DONT_MOVE               false //true only for debug when we don't want robot to move
 									  //#define SIM_REPOPULATE false
@@ -54,11 +55,12 @@ private:
 	uint32_t			sequenceStartTimestamp;
 	uint16_t			pingbackTime;
 	byte				currentGenomeId;
-	Genome*				currentGenome;
+	GeneticGenome*		currentGenome;
 	byte				currentStep;
 	boolean				interruptsDisabled;		//disable "interrupts" for bumping while in interrupt handler
 	byte				lastCommand;
 	byte				lastTime;
+	NeuralNetwork		neuralNet;
 	IArbotVMA03MDPlatform *arbotVma03MdPlatform;
 protected:
 	byte          state;
@@ -78,6 +80,14 @@ public:
 		lastTime				= 0;
 		state					= STARTING;
 		moveTimeout				= (uint16_t)(((float)timeMultiplier*33.0)*1.2);
+		
+		
+		//TODO
+		
+		float weights[6]={/*l2n1*/0.525157,/*l2n2*/0.804601,/*l3n1*/0.183411,0.014265,/*l3n2*/0.387660,0.371998};
+		neuralNet=NeuralNetwork();
+		neuralNet.setWeights(weights);
+		
 		
 		arduinoRandomize();
 	}
@@ -175,7 +185,7 @@ private:
 		if(currentGenome!=NULL)
 			delete currentGenome;
 		currentGenomeId	= getCurrentGenomeId();
-		currentGenome	= new Genome(currentGenomeId);
+		currentGenome	= new GeneticGenome(currentGenomeId);
 		currentStep		= 0;
 		state			= NEXT_LOOP;
 		arbotVma03MdPlatform->init();
@@ -222,12 +232,20 @@ private:
 		state				= THINKING;
 		interruptsDisabled	= false;
 		
-		currentStep++;
-		if(currentStep>GENOME_LAST_CMD_INDEX) {
-			state=NEXT_LOOP;
-			return;
-		}
-		geneToCommand(currentGenome->getGene(currentStep));
+		float logPingback=(float)log10(pingbackTime);
+		
+		float inputs[]={logPingback};
+		float outputs[2];
+		neuralNet.reset();
+		neuralNet.setInputs(inputs,1);
+		neuralNet.calculate();
+		neuralNet.getOutputs(&outputs[0],2);
+		
+		//gene is now output of neural net
+		byte gene=(byte)outputs[0];
+		gene=gene<<5;
+		gene=gene | (((byte)outputs[1]) & 0b00000111);
+		geneToCommand(gene);
 	}
 	
 	
@@ -356,7 +374,7 @@ private:
 		//switching genome
 		currentGenomeId++;
 		
-		if(currentGenomeId>=Population::getPopulationSize()){
+		if(currentGenomeId>=Population<GeneticGenome>::getPopulationSize()){
 			state=GENERATION_DONE;
 			return;
 		}
@@ -433,7 +451,7 @@ private:
 		arbotVma03MdPlatform->showDiagnostics(diag);
 
 		//pick winners and make copies
-		uint32_t mediumTime = Population::evolve();
+		uint32_t mediumTime = Population<GeneticGenome>::evolve();
 			
 		//init next generation
 		saveCurrentGenomeId(0);     //after repopulation, we start with first genome, we also set currentGenome to 0
@@ -442,7 +460,7 @@ private:
 		
 		uint32_t genTimout;
 		EEPROM_readAnything(EEPROM_SEQUENCE_TIMEOUT, genTimout);
-		if(genFreeCnt>=Population::getPopulationSize()/2 && ((float)mediumTime*1.1)<((float)genTimout)){
+		if(genFreeCnt>=Population<GeneticGenome>::getPopulationSize()/2 && ((float)mediumTime*1.1)<((float)genTimout)){
 			genTimout=(int32_t)((float)mediumTime*1.1);
 			saveSequenceTimeout(genTimout);
 		}

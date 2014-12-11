@@ -138,9 +138,14 @@ private:
 /*------------------------------------------------------------------------------------------*/
 /*	TRANSFER FUNCTIONS																		*/
 /*------------------------------------------------------------------------------------------*/
-	
+public:
 	static float transferLinear(float input){
 		float slope=1.0;
+		return input*slope;
+	}
+	
+	static float transferLinear10(float input){
+		float slope=10.0;
 		return input*slope;
 	}
 };
