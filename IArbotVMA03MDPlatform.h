@@ -18,6 +18,10 @@
 
 #include "ArbotPlatform.h"
 
+#define PING_NO_ANSWER	65534
+#define PING_WAITING	65533
+#define PING_TIMEOUT	5000
+
 class IArbotVMA03MDPlatform: virtual public ArbotPlatform{
 public:
     virtual boolean isMoving()=0;
