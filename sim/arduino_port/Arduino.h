@@ -4,6 +4,8 @@
 //arduino types
 #include <stdint.h>
 #include <chrono>
+#include <math.h>
+
 typedef uint8_t boolean;
 typedef uint8_t byte;
 

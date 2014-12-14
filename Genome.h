@@ -35,12 +35,13 @@ class Genome:public virtual IGenome{
 private:
 public:
 	byte genomeId;
-	byte geneSize;	//size of a single gene, 1-4 bytes
-	byte length;	//
+	byte geneSize;		//size of a single gene, 1-4 bytes
+	byte length;
 	
 	Genome()
 	{
 		geneSize=sizeof(T);
+		length=6;			//for NN, this is the number of weights
 	}
 	
 	explicit Genome(byte genomeId)
@@ -48,16 +49,26 @@ public:
 		this->genomeId=genomeId;
 		success=getSuccess();
 		geneSize=sizeof(T);
+		length=6;			//for NN, this is the number of weights
 	}
 	
 	virtual ~Genome()
 	{
 	}
 	
+	void getAllGenes(T genes[])
+	{
+		for(byte geneId=0;geneId<length;geneId++)
+		{
+			genes[geneId]=getGene(geneId);
+		}
+	}
+	
 	virtual byte getLength() const
 	{
 		return length;
 	}
+
 	
 	int32_t getSuccess(){
 		int32_t success=0;
@@ -69,7 +80,7 @@ public:
 	virtual void setSuccess(int32_t success)
 	{
 		this->success=success;
-		setGene(SUCCESS_GENE_INDEX,success);
+		EEPROM_writeAnything(OFFSET+SUCCESS_GENE_INDEX,success);
 	}
 	
 	T getGene(byte geneId) const
@@ -77,13 +88,13 @@ public:
 		//no clue what to do if gene is out of bounds??
 		if(geneId>=length) return 0;
 		T value;
-		EEPROM_readAnything(OFFSET+geneId, value);
+		EEPROM_readAnything(OFFSET+(geneId*sizeof(T)), value);
 		return value;
 	}
 	
 	void setGene(byte geneId, T value)
 	{
-		EEPROM_writeAnything(OFFSET+geneId,value);
+		EEPROM_writeAnything(OFFSET+(geneId*sizeof(T)),value);
 	}
 	
 	byte getReproductionType()
@@ -96,7 +107,7 @@ public:
 	
 	void setReproductionType(byte reproductionType)
 	{
-		setGene(REPRODUCTION_TYPE_INDEX,reproductionType);
+		EEPROM_writeAnything(OFFSET+REPRODUCTION_TYPE_INDEX,reproductionType);
 	}
 
 	
@@ -109,7 +120,7 @@ public:
 	
 	void setGeneration(uint16_t generation)
 	{
-		setGene(GENERATION_GENE_INDEX,generation);
+		EEPROM_writeAnything(OFFSET+GENERATION_GENE_INDEX,generation);
 	}
 	
 	virtual void reset()
@@ -126,8 +137,39 @@ public:
 		setSuccess(-2147483647);
 	}
 	
-	/*/ Generates random genome */
-	virtual void seedGenome()=0;
+	
+	//only for float really..
+	virtual void seedGenome()
+	{
+		reset(); //zero out and set initial values
+		
+		for(byte geneId=0;geneId<length;geneId++)
+		{
+			//x=random number between -5 and 5
+			float x = (((float)rand()/(float)(RAND_MAX)) * 10)-5;
+			//T dice = random(0,1);
+			setGene(geneId,x);
+		}
+		
+		//set random reproduction type
+		//byte dice=random(0,3);
+		byte dice=0; //only mutation for now
+		setReproductionType(dice);
+		
+	}
+	
+	virtual void listGenome(char* outStr, size_t strLen)
+	{
+		snprintf(outStr,strLen, "genome:%i,gen:%i,succ:%d,rep:%i::",
+				 genomeId,getGeneration(),getSuccess(),getReproductionType());
+		
+		for(byte geneId=0;geneId<length;geneId++)
+		{
+			T gene=getGene(geneId);
+			snprintf(outStr,strLen,"%s%f,",outStr,gene);
+		}
+		
+	}
 	
 
 	
@@ -209,8 +251,9 @@ public:
 			DEBUG_STDOUT((int)time);
 			DEBUG_STDOUT("-->");
 #endif*/
-			dice=random(0,sizeof(T));
-			gene ^= 1 << dice; //this should randomly flip a single bit
+			dice=random(0,sizeof(T)/sizeof(byte)); //this should work with any data type, incluing float
+			byte* b=reinterpret_cast<byte*>(&gene);
+			*(b+dice) ^= 1 << random(0,7) ; //this should randomly flip a single bit
 /*#ifdef DEBUG
 			command=gene & G_MASK;
 			time=gene & T_MASK;

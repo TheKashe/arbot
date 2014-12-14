@@ -77,7 +77,7 @@ public:
 	
 	virtual void ping()
 	{
-		DEBUG_STDOUT("pinging\n");
+		//DEBUG_STDOUT("pinging\n");
 		_instance->PostMessage("PNG");
 		pingTimestamp=millis();
 		pingbackTimestamp=0;
@@ -85,20 +85,20 @@ public:
 	
 	virtual void pingback()
 	{
-		DEBUG_STDOUT("got pingback\n");
+		//DEBUG_STDOUT("got pingback\n");
 		pingbackTimestamp=millis();
 	}
 	
 	virtual uint16_t getPingReply()
 	{
-		DEBUG_STDOUT("getPingReply:\n");
+		//DEBUG_STDOUT("getPingReply:\n");
 		if(pingbackTimestamp==0 && (millis()-pingTimestamp<PING_TIMEOUT)){
-			DEBUG_STDOUT("PING_WAITING\n");
+			//DEBUG_STDOUT("PING_WAITING\n");
 			return PING_WAITING;
 		}
 		if(pingbackTimestamp==0 && (millis()-pingTimestamp>PING_TIMEOUT)){
-			DEBUG_STDOUT(millis()-pingTimestamp);
-			DEBUG_STDOUT("PING_NO_ANSWER\n");
+			//DEBUG_STDOUT(millis()-pingTimestamp);
+			//DEBUG_STDOUT("PING_NO_ANSWER\n");
 			return PING_NO_ANSWER;
 		}
 		uint16_t pingback=pingbackTimestamp-pingTimestamp;

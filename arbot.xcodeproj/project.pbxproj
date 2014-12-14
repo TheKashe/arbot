@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		1965A0BC1A38F58500638AEC /* Neuron.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Neuron.h; sourceTree = "<group>"; };
 		1965A0BD1A39C51F00638AEC /* NeuralNetwork.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NeuralNetwork.h; sourceTree = "<group>"; };
 		1988CEB51A3A315C00EEA7FC /* GeneticGenome.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeneticGenome.h; sourceTree = "<group>"; };
 		1988CEB61A3A36E900EEA7FC /* IGenome.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IGenome.h; sourceTree = "<group>"; };
@@ -47,6 +46,7 @@
 		19C392131A36352B00601B37 /* nacl_gdb_debug */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = nacl_gdb_debug; sourceTree = "<group>"; };
 		19C392141A36352B00601B37 /* randomseed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = randomseed.h; sourceTree = "<group>"; };
 		19C392151A36352B00601B37 /* SimulatorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimulatorController.h; sourceTree = "<group>"; };
+		19DA6C511A3E190A008E8605 /* nn.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nn.cpp; path = test/nn.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -54,7 +54,6 @@
 			isa = PBXGroup;
 			children = (
 				1965A0BD1A39C51F00638AEC /* NeuralNetwork.h */,
-				1965A0BC1A38F58500638AEC /* Neuron.h */,
 				19C391F81A36352B00601B37 /* sim */,
 				19C391EA1A36350700601B37 /* arbot.ino */,
 				19C391EB1A36350700601B37 /* ArbotController.h */,
@@ -78,6 +77,7 @@
 		19C391F81A36352B00601B37 /* sim */ = {
 			isa = PBXGroup;
 			children = (
+				19DA6C501A3E1900008E8605 /* test */,
 				19C392011A36352B00601B37 /* html */,
 				19C391FB1A36352B00601B37 /* arduino_port */,
 				19C391FA1A36352B00601B37 /* ArbotSimulatorPlatform.h */,
@@ -126,6 +126,14 @@
 				19C3920A1A36352B00601B37 /* wallV.png */,
 			);
 			path = assets;
+			sourceTree = "<group>";
+		};
+		19DA6C501A3E1900008E8605 /* test */ = {
+			isa = PBXGroup;
+			children = (
+				19DA6C511A3E190A008E8605 /* nn.cpp */,
+			);
+			name = test;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

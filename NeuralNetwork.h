@@ -10,105 +10,109 @@
 #ifndef arbot_NeuralNetwork_h
 #define arbot_NeuralNetwork_h
 
-
-#include "Neuron.h"
+#define ARC4RANDOM_MAX      0x100000000
+#define RND ((float)arc4random() / ARC4RANDOM_MAX)
 
 class NeuralNetwork{
 private:
-	Neuron inputsLayer[1];
-	Neuron hiddenLayer[2];
-	Neuron outputsLayer[2];
-	Neuron* pNeurons[3];
+	uint8_t layersCount;
+	uint16_t activationsCount=0;
+	uint16_t weightsCount=1;
+	uint16_t biasesCount=0;
+	
+	uint16_t* layers;
+	float *activations;
+	float *weights;
+	float *biases;
 public:
-	NeuralNetwork(){}
-	
-	NeuralNetwork(float weights[]){
-		outputsLayer[0].init(2,0);
-		outputsLayer[1].init(2,0);
-		 
-		hiddenLayer[0].init(1,2);
-		hiddenLayer[1].init(1,2);
-		hiddenLayer[0].setReceiver(0,&outputsLayer[0]);
-		hiddenLayer[0].setReceiver(1,&outputsLayer[1]);
-		hiddenLayer[1].setReceiver(0,&outputsLayer[0]);
-		hiddenLayer[1].setReceiver(1,&outputsLayer[1]);
-		
-		inputsLayer[0].init(1,2);
-		inputsLayer[0].setReceiver(0,&hiddenLayer[0]);
-		inputsLayer[0].setReceiver(1,&hiddenLayer[1]);
-		
-		pNeurons[0]=&inputsLayer[0];
-		pNeurons[1]=&hiddenLayer[0];
-		pNeurons[2]=&outputsLayer[0];
-
-		reset(); //just to be sure
-	}
-	virtual ~NeuralNetwork(){}
-	
-	byte getLevelCount()
+	NeuralNetwork(byte layerCount, ...)
 	{
-		return 3;
-	}
-	
-	byte getNeuronCount(byte level)
-	{
-		switch(level){
-			case 0: return 1;
-			case 1: return 2;
-			case 2: return 2;
-		}
-		return 0;
-	}
-	
-	
-	//weights are flat array since that's easy to use with our genetic framework
-	void setWeights(float weights[]){
-		int w=0; //current weight counter
-		for(byte i=0;i<getLevelCount();i++){
-			//here we are in a level
-			for(byte j=0;j<getNeuronCount(i);j++){
-				//here we are in a neuron
-				for(byte k=0;k<pNeurons[i][j].getWeightCount();k++){
-					//here we are at weight
-					pNeurons[i][j].setNextWeight(i==0?1:weights[w++]); //input neurons habe no weights
-				}
+		layersCount			= layerCount;
+		activationsCount	= 0;
+		weightsCount		= 0;
+		biasesCount			= 0;
+		
+		layers=new uint16_t[layerCount];
+		
+		va_list param;
+		va_start(param, layerCount);
+		for (byte i = 0; i < layerCount; i++){
+			layers[i]=va_arg (param, uint16_t);
+			activationsCount+=layers[i];
+			if(i>0){
+				weightsCount+=layers[i]*layers[i-1];
+				biasesCount+=layers[i];
 			}
-			
+		}
+		va_end (param);
+		
+		activations	= new float[activationsCount];
+		weights		= new float[weightsCount];
+		biases		= new float[biasesCount];
+	}
+	
+	~NeuralNetwork()
+	{
+		delete[] layers;
+		delete[] activations;
+		delete[] weights;
+		delete[] biases;
+	}
+	
+	void setWeights(float* weights){
+		for(uint16_t i=0;i<weightsCount;i++){
+			this->weights[i]=weights[i];
+		}
+		std::cout << "weights:\n";
+		for(uint16_t i=0;i<weightsCount;i++){
+			std::cout<<weights[i] << "\n";
 		}
 	}
 	
-	
-	//this will reset the whole network
-	void reset()
-	{
-		for(int i=0;i<(sizeof inputsLayer/sizeof inputsLayer[0]);i++){
-			inputsLayer[i].reset();
+	void setBiases(float* biases){
+		for(uint16_t i=0;i<biasesCount;i++){
+			this->biases[i]=biases[i];
+		}
+		std::cout << "biases:\n";
+		for(uint16_t i=0;i<biasesCount;i++){
+			//biases[i]=RND*10-5;
+			std::cout<<biases[i] << "\n";
 		}
 	}
 	
-	void setInputs(float inputs[], byte size)
-	{
-		for(int i=0;i<size;i++){
-			inputsLayer[i].setNextInput(inputs[i]);
+	void calculate(float* inputs, float* outputs){
+		for(byte i=0;i<layers[0];i++){
+			activations[i]=inputs[i];					//first i activations are inputs..
+		}
+		uint16_t nIdx=layers[0];							//nIdx holds current neuron index
+		uint16_t bIdx=0;									//bias index
+		uint16_t wIdx=0;									//which is the current weight we are processing
+		uint16_t inOffset=0;								//offset of input in activation array
+		
+		
+		for(byte i=1;i<layersCount;i++){				//i will run over layers, starting at 2nd, first layer is input only so no weights and biases apply...
+			for(uint16_t j=0;j<layers[i];j++){			//j will run over nerons in a layer
+				activations[nIdx]=0;					//clear old values
+				for(uint16_t k=0; k<layers[i-1];k++){	//k will run over inputs per neuron, previous layer tells us how many inputs we have per neuron
+					activations[nIdx]+=weights[wIdx++]*activations[k+inOffset];
+				}
+				activations[nIdx]+=biases[bIdx++];
+				activations[nIdx]=transferSigmoid(activations[nIdx]);
+				nIdx++;
+			}
+			inOffset+=layers[i-1]; //input offset is increment by number of
 		}
 		
-	}
-	
-	void calculate(){
-		inputsLayer[0].calculateAndPropagate();
-		hiddenLayer[0].calculateAndPropagate();
-		hiddenLayer[1].calculateAndPropagate();
-		outputsLayer[0].calculate();
-		outputsLayer[1].calculate();
-	}
-	
-	void getOutputs(float *outputs, byte size){
-		if(size!=2) return;
-		for(int i=0;i<2;i++){
-			outputs[i]=Neuron::transferLinear10(outputsLayer[i].getOutput());
+		uint16_t k=0;
+		for(int i=activationsCount-layers[layersCount-1];i<activationsCount;i++){
+			outputs[k++]=activations[i];
 		}
 	}
 	
+	static float transferSigmoid(float input){
+		float output=1/(1+pow(M_E,-input));
+		return output;
+	}
 };
 
 #endif
