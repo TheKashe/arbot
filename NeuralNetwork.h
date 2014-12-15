@@ -89,19 +89,17 @@ public:
 	}
 	
 	void calculate(float* inputs, float* outputs, float* vectors=NULL){
-		byte zero[]={0};
 		for(byte k=0;k<layersN[0];k++){
 			activationsVector[0][k]=inputs[k];					//first i activations are inputs..
 		}
 			
 		for(byte l=1;l<layersCount;l++){					//l=layer
 			for(uint16_t j=0;j<layersN[l];j++){				//j=neuron
-				float sum=0;
+				sumsVector[l][j]=0;
 				for(uint16_t k=0;k<layers[l-1];k++){
-					sum+=weightsVector[l][j][k]*activationsVector[l-1][k];
+					sumsVector[l][j]+=weightsVector[l][j][k]*activationsVector[l-1][k];
 				}
-				sumsVector[l][j]=sum;
-				activationsVector[l][j]=transferSigmoid(sumsVector[l][j]);
+				activationsVector[l][j]=transferSigmoid(-sumsVector[l][j]);
 			}
 		}
 		
