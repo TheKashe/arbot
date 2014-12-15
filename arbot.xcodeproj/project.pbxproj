@@ -47,6 +47,7 @@
 		19C392141A36352B00601B37 /* randomseed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = randomseed.h; sourceTree = "<group>"; };
 		19C392151A36352B00601B37 /* SimulatorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimulatorController.h; sourceTree = "<group>"; };
 		19DA6C511A3E190A008E8605 /* nn.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nn.cpp; path = test/nn.cpp; sourceTree = "<group>"; };
+		19DA6C521A3E2D8A008E8605 /* backprop.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = backprop.cpp; path = test/backprop.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -131,6 +132,7 @@
 		19DA6C501A3E1900008E8605 /* test */ = {
 			isa = PBXGroup;
 			children = (
+				19DA6C521A3E2D8A008E8605 /* backprop.cpp */,
 				19DA6C511A3E190A008E8605 /* nn.cpp */,
 			);
 			name = test;

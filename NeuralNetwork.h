@@ -13,105 +13,115 @@
 #define ARC4RANDOM_MAX      0x100000000
 #define RND ((float)arc4random() / ARC4RANDOM_MAX)
 
+#define OUTPUTS (layers[layersCount-1])
+
 class NeuralNetwork{
 private:
 	uint8_t layersCount;
-	uint16_t activationsCount=0;
-	uint16_t weightsCount=1;
-	uint16_t biasesCount=0;
 	
+	uint16_t* layersN;
 	uint16_t* layers;
-	float *activations;
-	float *weights;
+	float ***weightsVector;
+	float **activationsVector;
+	float **sumsVector;
 	float *biases;
 public:
 	NeuralNetwork(byte layerCount, ...)
 	{
 		layersCount			= layerCount;
-		activationsCount	= 0;
-		weightsCount		= 0;
-		biasesCount			= 0;
 		
-		layers=new uint16_t[layerCount];
-		
+		layers	= new uint16_t[layerCount];
+		layersN	= new uint16_t[layerCount];
 		va_list param;
 		va_start(param, layerCount);
 		for (byte i = 0; i < layerCount; i++){
 			layers[i]=va_arg (param, uint16_t);
-			activationsCount+=layers[i];
-			if(i>0){
-				weightsCount+=layers[i]*layers[i-1];
-				biasesCount+=layers[i];
+			layersN[i]=layers[i];
+			//let's add virtual bias neurons to first and hidden layers
+			if(i<layerCount-1){
+				layers[i]+=1;
 			}
 		}
 		va_end (param);
+	
+		//transpose weights to multidemensional vector
+		weightsVector			= new float**[layersCount]; //layer 0 actually never has weights, but let's simplify
+		activationsVector		= new float*[layersCount];
+		activationsVector[0]	= new float[layers[0]];		//activations also exist on this level
+		sumsVector				= new float*[layersCount];
 		
-		activations	= new float[activationsCount];
-		weights		= new float[weightsCount];
-		biases		= new float[biasesCount];
+		activationsVector[0][layers[0]-1]=1;				//bias neuron for layer 0
+		for(byte l=1;l<layersCount;l++){
+			weightsVector[l]=new float*[layersN[l]];
+			activationsVector[l]=new float[layers[l]];
+			sumsVector[l]=new float[layersN[l]];
+			for(uint16_t j=0;j<layersN[l];j++){
+				weightsVector[l][j]=new float[layers[l-1]];
+			}
+			//all but last layer have bias neuron
+			if(l<layersCount-1){
+				activationsVector[l][layers[l]-1]=1;
+			}
+			
+		}
 	}
 	
 	~NeuralNetwork()
 	{
-		delete[] layers;
-		delete[] activations;
-		delete[] weights;
-		delete[] biases;
+		//TODO
 	}
 	
 	void setWeights(float* weights){
-		for(uint16_t i=0;i<weightsCount;i++){
-			this->weights[i]=weights[i];
-		}
-		std::cout << "weights:\n";
-		for(uint16_t i=0;i<weightsCount;i++){
-			std::cout<<weights[i] << "\n";
-		}
-	}
-	
-	void setBiases(float* biases){
-		for(uint16_t i=0;i<biasesCount;i++){
-			this->biases[i]=biases[i];
-		}
-		std::cout << "biases:\n";
-		for(uint16_t i=0;i<biasesCount;i++){
-			//biases[i]=RND*10-5;
-			std::cout<<biases[i] << "\n";
-		}
-	}
-	
-	void calculate(float* inputs, float* outputs){
-		for(byte i=0;i<layers[0];i++){
-			activations[i]=inputs[i];					//first i activations are inputs..
-		}
-		uint16_t nIdx=layers[0];							//nIdx holds current neuron index
-		uint16_t bIdx=0;									//bias index
-		uint16_t wIdx=0;									//which is the current weight we are processing
-		uint16_t inOffset=0;								//offset of input in activation array
-		
-		
-		for(byte i=1;i<layersCount;i++){				//i will run over layers, starting at 2nd, first layer is input only so no weights and biases apply...
-			for(uint16_t j=0;j<layers[i];j++){			//j will run over nerons in a layer
-				activations[nIdx]=0;					//clear old values
-				for(uint16_t k=0; k<layers[i-1];k++){	//k will run over inputs per neuron, previous layer tells us how many inputs we have per neuron
-					activations[nIdx]+=weights[wIdx++]*activations[k+inOffset];
+		//transpose weights to multidemensional vector
+		int16_t i=0;
+		for(byte l=1;l<layersCount;l++){
+			for(uint16_t j=0;j<layersN[l];j++){
+				for(uint16_t k=0;k<layers[l-1];k++){
+					weightsVector[l][j][k]=weights[i++];
 				}
-				activations[nIdx]+=biases[bIdx++];
-				activations[nIdx]=transferSigmoid(activations[nIdx]);
-				nIdx++;
 			}
-			inOffset+=layers[i-1]; //input offset is increment by number of
+
+		}
+	}
+	
+	void randomize(){
+		//TODO
+	}
+	
+	void calculate(float* inputs, float* outputs, float* vectors=NULL){
+		byte zero[]={0};
+		for(byte k=0;k<layersN[0];k++){
+			activationsVector[0][k]=inputs[k];					//first i activations are inputs..
+		}
+			
+		for(byte l=1;l<layersCount;l++){					//l=layer
+			for(uint16_t j=0;j<layersN[l];j++){				//j=neuron
+				float sum=0;
+				for(uint16_t k=0;k<layers[l-1];k++){
+					sum+=weightsVector[l][j][k]*activationsVector[l-1][k];
+				}
+				sumsVector[l][j]=sum;
+				activationsVector[l][j]=transferSigmoid(sumsVector[l][j]);
+			}
 		}
 		
-		uint16_t k=0;
-		for(int i=activationsCount-layers[layersCount-1];i<activationsCount;i++){
-			outputs[k++]=activations[i];
+		for(int i=0;i<layers[layersCount-1];i++){
+			outputs[i]=activationsVector[layersCount-1][i];
 		}
+	}
+	
+	void backprop(float* inputs, float* targets){
+		//TODO
 	}
 	
 	static float transferSigmoid(float input){
 		float output=1/(1+pow(M_E,-input));
 		return output;
+	}
+	
+	static float primeSigmoid(float input){
+		float s=transferSigmoid(input);
+		return s*(1-s);	//http://www.ai.mit.edu/courses/6.892/lecture8-html/sld015.htm
 	}
 };
 
