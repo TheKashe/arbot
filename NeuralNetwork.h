@@ -17,10 +17,8 @@
 
 typedef struct{
 	float activation;					// there are a many as neurons + bias neurons
-	float weightedInput;				// as many as neurons
 	float error;						// as many as neurons
 	float *weights;						// multiple per neuron
-	float *weightDeltas;				// multiple per neuron
 } Neuron;
 
 class NeuralNetwork{
@@ -57,7 +55,6 @@ public:
 				//inputs don't have weights
 				if(l>0){
 					neurons[l][j].weights=new float[layers[l-1]];
-					neurons[l][j].weightDeltas=new float[layers[l-1]];
 				}
 			}
 			//bias neuron for all but last layers
@@ -88,7 +85,7 @@ public:
 		for(byte l=1;l<layersCount;l++){					//l=layer
 			for(uint16_t j=0;j<layersN[l];j++){				//j=neuron
 				for(uint16_t k=0;k<layers[l-1];k++){
-					neurons[l][j].weights[k]=RND*10-5;
+					neurons[l][j].weights[k]=RND*2-1;
 				}
 			}
 		}
@@ -102,11 +99,11 @@ public:
 		for(byte l=1;l<layersCount;l++){					//l=layer
 			for(uint16_t j=0;j<layersN[l];j++){				//j=neuron
 				Neuron* n=&neurons[l][j];
-				n->weightedInput=0;
+				float weightedInput=0;
 				for(uint16_t k=0;k<layers[l-1];k++){
-					n->weightedInput+=n->weights[k]*neurons[l-1][k].activation;
+					weightedInput+=n->weights[k]*neurons[l-1][k].activation;
 				}
-				n->activation=transferSigmoid(n->weightedInput);
+				n->activation=transferSigmoid(weightedInput);
 			}
 		}
 		
@@ -152,13 +149,15 @@ public:
 	}
 	
 	static float transferSigmoid(float input){
-		float output=1/(1+pow(M_E,-input));
+		float output=1/(1+pow(M_E,-input*2));
 		return output;
 	}
 	
 	//because neuron value already IS sigmoid, just use input to get the derrivative
 	static float derivativeSigmoid(float input){
-		return input*(1-input);	//http://www.ai.mit.edu/courses/6.892/lecture8-html/sld015.htm
+		//input needs to be clipped, or we'll converge towards 1/0
+		input=input<0.01?0.1:input>0.99?0.99:input;
+		return 2*input*(1-input);	//http://www.ai.mit.edu/courses/6.892/lecture8-html/sld015.htm
 	}
 };
 

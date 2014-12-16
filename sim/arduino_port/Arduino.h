@@ -51,9 +51,7 @@ typedef uint8_t byte;
 #endif
 
 // undefine stdlib's abs if encountered
-#ifdef abs
-#undef abs
-#endif
+
 
 #define min(a,b) ((a)<(b)?(a):(b))
 #define max(a,b) ((a)>(b)?(a):(b))

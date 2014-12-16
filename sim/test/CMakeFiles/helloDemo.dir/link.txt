@@ -1,0 +1,1 @@
+/usr/bin/c++   -std=c++11 -stdlib=libc++ -Wl,-search_paths_first -Wl,-headerpad_max_install_names   CMakeFiles/helloDemo.dir/backprop.cpp.o  -o helloDemo  

@@ -1,0 +1,29 @@
+TZERO_CHECK
+v6
+r1
+cCheck dependencies
+cPhaseScriptExecution CMake\ Rules /Users/jernej/repo/arbot/sim/test/xcode/HELLO.build/Debug/ZERO_CHECK.build/Script-95F0D1D2C27643429F296620.sh
+
+N/Users/jernej/repo/arbot/sim/test/xcode/HELLO.build/Debug/ZERO_CHECK.build/Script-95F0D1D2C27643429F296620.sh
+c0000000054907F3800000000000000A9
+t1418755896
+s169
+
+CCheck dependencies
+r0
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection18"Check dependencies18"Check dependenciesf06c1fb8b640ba41^a30322b8b640ba41^---0#1#1#--18"Check dependencies36"5ACB6985-49F6-4161-94E2-466D0883DC5F-
+
+CPhaseScriptExecution CMake\ Rules /Users/jernej/repo/arbot/sim/test/xcode/HELLO.build/Debug/ZERO_CHECK.build/Script-95F0D1D2C27643429F296620.sh
+s440448696.135075
+e440448696.186505
+r1
+xPhaseScriptExecution
+xCMake Rules
+x/Users/jernej/repo/arbot/sim/test/xcode/HELLO.build/Debug/ZERO_CHECK.build/Script-95F0D1D2C27643429F296620.sh
+oecho ""
+o
+omake -f /Users/jernej/repo/arbot/sim/test/xcode/CMakeScripts/ReRunCMake.make
+omake[1]: `/Users/jernej/repo/arbot/sim/test/xcode/CMakeFiles/cmake.check_cache' is up to date.
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection37"Run custom shell script 'CMake Rules'109"PhaseScriptExecution CMake\ Rules xcode/HELLO.build/Debug/ZERO_CHECK.build/Script-95F0D1D2C27643429F296620.sh2b1223b8b640ba41^0ebf2fb8b640ba41^-181"echo ""make -f /Users/jernej/repo/arbot/sim/test/xcode/CMakeScripts/ReRunCMake.makemake[1]: `/Users/jernej/repo/arbot/sim/test/xcode/CMakeFiles/cmake.check_cache' is up to date.3(21%IDEActivityLogMessage2@8"echo ""-440448696#0#8#-0#-----2@77"make -f /Users/jernej/repo/arbot/sim/test/xcode/CMakeScripts/ReRunCMake.make-440448696#9#77#-0#-----2@95"make[1]: `/Users/jernej/repo/arbot/sim/test/xcode/CMakeFiles/cmake.check_cache' is up to date.-440448696#86#95#-0#-----0#0#1#--276"PhaseScriptExecution CMake\ Rules xcode/HELLO.build/Debug/ZERO_CHECK.build/Script-95F0D1D2C27643429F296620.sh    cd /Users/jernej/repo/arbot/sim/test    /bin/sh -c /Users/jernej/repo/arbot/sim/test/xcode/HELLO.build/Debug/ZERO_CHECK.build/Script-95F0D1D2C27643429F296620.sh36"0D54A2EF-5AE0-44D5-BCD1-BE0E66DBBE8B-
+bB694878E-E0CC-4B25-A998-5D5B1F41329C
+

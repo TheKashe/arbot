@@ -1,0 +1,8 @@
+# Saved breakpoints file created on Fri Dec 12 00:10:42 CET 2014
+
+set $current_radix = $input_radix
+set input-radix 012
+
+break Genome.h:245
+
+set input-radix $current_radix

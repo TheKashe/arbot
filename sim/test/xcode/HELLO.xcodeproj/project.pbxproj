@@ -1,0 +1,431 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		19DA6C7B1A40B6AB008E8605 /* libstdc++.6.0.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 19DA6C791A40B6AB008E8605 /* libstdc++.6.0.9.dylib */; };
+		19DA6C7D1A40B6DA008E8605 /* libstdc++.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 19DA6C7A1A40B6AB008E8605 /* libstdc++.6.dylib */; };
+		19DA6C7F1A40B6DA008E8605 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 19DA6C7E1A40B6DA008E8605 /* libstdc++.dylib */; };
+		8EE2AAF93B054197BB500C98 /* backprop.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 454117CE906D4DE3AC619CAD /* backprop.cpp */; settings = {COMPILER_FLAGS = ""; }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		19DA6C791A40B6AB008E8605 /* libstdc++.6.0.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.0.9.dylib"; path = "usr/lib/libstdc++.6.0.9.dylib"; sourceTree = SDKROOT; };
+		19DA6C7A1A40B6AB008E8605 /* libstdc++.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.dylib"; path = "usr/lib/libstdc++.6.dylib"; sourceTree = SDKROOT; };
+		19DA6C7E1A40B6DA008E8605 /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
+		2445CE94313343CDA42F356E /* helloDemo */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; path = helloDemo; sourceTree = BUILT_PRODUCTS_DIR; };
+		454117CE906D4DE3AC619CAD /* backprop.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; path = backprop.cpp; sourceTree = SOURCE_ROOT; };
+		BB9F48BFF2D24BB49C4B766B /* CMakeLists.txt */ = {isa = PBXFileReference; explicitFileType = sourcecode.text; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		19DA6C781A40B67A008E8605 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				19DA6C7F1A40B6DA008E8605 /* libstdc++.dylib in Frameworks */,
+				19DA6C7D1A40B6DA008E8605 /* libstdc++.6.dylib in Frameworks */,
+				19DA6C7B1A40B6AB008E8605 /* libstdc++.6.0.9.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2D7C9977B7AE4339A3DD88B7 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				620BB01B9DD74626B0F302DC /* ALL_BUILD */,
+				A433667E050C4CB1A8F63228 /* ZERO_CHECK */,
+				A204331FBCC84A92A722CF5E /* helloDemo */,
+			);
+			name = Sources;
+			sourceTree = "<group>";
+		};
+		34CB39B5F7AE4E4F89E47EB4 /* Source Files */ = {
+			isa = PBXGroup;
+			children = (
+				454117CE906D4DE3AC619CAD /* backprop.cpp */,
+			);
+			name = "Source Files";
+			sourceTree = "<group>";
+		};
+		60295C3887934DD191B658E2 /* CMake Rules */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "CMake Rules";
+			sourceTree = "<group>";
+		};
+		620BB01B9DD74626B0F302DC /* ALL_BUILD */ = {
+			isa = PBXGroup;
+			children = (
+				74310F8810F743C390070F78 /* CMake Rules */,
+				BB9F48BFF2D24BB49C4B766B /* CMakeLists.txt */,
+			);
+			name = ALL_BUILD;
+			sourceTree = "<group>";
+		};
+		699C8B7EF1EC4689A5A9C136 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2445CE94313343CDA42F356E /* helloDemo */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		74310F8810F743C390070F78 /* CMake Rules */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "CMake Rules";
+			sourceTree = "<group>";
+		};
+		A204331FBCC84A92A722CF5E /* helloDemo */ = {
+			isa = PBXGroup;
+			children = (
+				34CB39B5F7AE4E4F89E47EB4 /* Source Files */,
+				BB9F48BFF2D24BB49C4B766B /* CMakeLists.txt */,
+			);
+			name = helloDemo;
+			sourceTree = "<group>";
+		};
+		A433667E050C4CB1A8F63228 /* ZERO_CHECK */ = {
+			isa = PBXGroup;
+			children = (
+				60295C3887934DD191B658E2 /* CMake Rules */,
+				BB9F48BFF2D24BB49C4B766B /* CMakeLists.txt */,
+			);
+			name = ZERO_CHECK;
+			sourceTree = "<group>";
+		};
+		E01A7D07EFD04FA5BC2BF0D8 = {
+			isa = PBXGroup;
+			children = (
+				19DA6C7E1A40B6DA008E8605 /* libstdc++.dylib */,
+				19DA6C791A40B6AB008E8605 /* libstdc++.6.0.9.dylib */,
+				19DA6C7A1A40B6AB008E8605 /* libstdc++.6.dylib */,
+				2D7C9977B7AE4339A3DD88B7 /* Sources */,
+				F42AB80BA2FC471D8B3F5AC1 /* Resources */,
+				699C8B7EF1EC4689A5A9C136 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F42AB80BA2FC471D8B3F5AC1 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F81F797F0A4D4761BC7BC376 /* helloDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C3ADCF0003484C1B875D40A8 /* Build configuration list for PBXNativeTarget "helloDemo" */;
+			buildPhases = (
+				3CE87A13F592449E8145A35E /* Sources */,
+				19DA6C781A40B67A008E8605 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = helloDemo;
+			productName = helloDemo;
+			productReference = 2445CE94313343CDA42F356E /* helloDemo */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BC442A1293FE41F39946070A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+			};
+			buildConfigurationList = B330595332A74076A5C90316 /* Build configuration list for PBXProject "HELLO" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = E01A7D07EFD04FA5BC2BF0D8;
+			projectDirPath = ..;
+			projectRoot = "";
+			targets = (
+				F81F797F0A4D4761BC7BC376 /* helloDemo */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3CE87A13F592449E8145A35E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8EE2AAF93B054197BB500C98 /* backprop.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		3DB7DAF31C254001B3810760 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LIBRARY = "libc++";
+				GCC_OPTIMIZATION_LEVEL = 0;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)",
+					"-stdlib=libc++",
+				);
+				SDKROOT = macosx10.8;
+				SYMROOT = /Users/jernej/repo/arbot/sim/test/xcode/build;
+			};
+			name = Release;
+		};
+		46DF966B91804899A79E52C5 /* RelWithDebInfo */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				EXECUTABLE_PREFIX = "";
+				EXECUTABLE_SUFFIX = "";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 2;
+				GCC_PREPROCESSOR_DEFINITIONS = "'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'";
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = (
+					/Users/jernej/repo/arbot/sim/test/..,
+					"/Volumes/DataHD/MacOs/jernej/Developer/FANN-2.2.0-Source/src/include",
+				);
+				INSTALL_PATH = "";
+				LIBRARY_SEARCH_PATHS = "";
+				OTHER_CFLAGS = "       -DNDEBUG  ";
+				OTHER_CPLUSPLUSFLAGS = (
+					"-std=c++11",
+					"-stdlib=libc++",
+					"-DNDEBUG",
+				);
+				OTHER_LDFLAGS = (
+					"-Wl,-search_paths_first",
+					"-Wl,-headerpad_max_install_names",
+				);
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = helloDemo;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/jernej/repo/arbot/sim/test/xcode;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+			};
+			name = RelWithDebInfo;
+		};
+		6CAF594BEB3A448CB735D0E3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				EXECUTABLE_PREFIX = "";
+				EXECUTABLE_SUFFIX = "";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PREPROCESSOR_DEFINITIONS = "'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'";
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = (
+					/Users/jernej/repo/arbot/sim/test/..,
+					"/Volumes/DataHD/MacOs/jernej/Developer/FANN-2.2.0-Source/src/include",
+				);
+				INSTALL_PATH = "";
+				LIBRARY_SEARCH_PATHS = "";
+				OTHER_CFLAGS = "    -DNDEBUG  ";
+				OTHER_CPLUSPLUSFLAGS = (
+					"-std=c++11",
+					"-stdlib=libc++",
+					"-DNDEBUG",
+				);
+				OTHER_LDFLAGS = (
+					"-Wl,-search_paths_first",
+					"-Wl,-headerpad_max_install_names",
+				);
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = helloDemo;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/jernej/repo/arbot/sim/test/xcode;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+			};
+			name = Release;
+		};
+		6E0B44050CED47838C9C3E33 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LIBRARY = "libc++";
+				GCC_OPTIMIZATION_LEVEL = 0;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)",
+					"-stdlib=libc++",
+				);
+				SDKROOT = macosx10.8;
+				SYMROOT = /Users/jernej/repo/arbot/sim/test/xcode/build;
+			};
+			name = Debug;
+		};
+		C2DDA4E650D348379A4B0DC2 /* MinSizeRel */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LIBRARY = "libc++";
+				GCC_OPTIMIZATION_LEVEL = 0;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)",
+					"-stdlib=libc++",
+				);
+				SDKROOT = macosx10.8;
+				SYMROOT = /Users/jernej/repo/arbot/sim/test/xcode/build;
+			};
+			name = MinSizeRel;
+		};
+		C40028517FDB45B386ACA7C3 /* MinSizeRel */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				EXECUTABLE_PREFIX = "";
+				EXECUTABLE_SUFFIX = "";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_PREPROCESSOR_DEFINITIONS = "'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'";
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = (
+					/Users/jernej/repo/arbot/sim/test/..,
+					"/Volumes/DataHD/MacOs/jernej/Developer/FANN-2.2.0-Source/src/include",
+				);
+				INSTALL_PATH = "";
+				LIBRARY_SEARCH_PATHS = "";
+				OTHER_CFLAGS = "    -DNDEBUG  ";
+				OTHER_CPLUSPLUSFLAGS = (
+					"-std=c++11",
+					"-stdlib=libc++",
+					"-DNDEBUG",
+				);
+				OTHER_LDFLAGS = (
+					"-Wl,-search_paths_first",
+					"-Wl,-headerpad_max_install_names",
+				);
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = helloDemo;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/jernej/repo/arbot/sim/test/xcode;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+			};
+			name = MinSizeRel;
+		};
+		D1FEC0A5DBD14F23A81B7674 /* RelWithDebInfo */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LIBRARY = "libc++";
+				GCC_OPTIMIZATION_LEVEL = 0;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)",
+					"-stdlib=libc++",
+				);
+				SDKROOT = macosx10.8;
+				SYMROOT = /Users/jernej/repo/arbot/sim/test/xcode/build;
+			};
+			name = RelWithDebInfo;
+		};
+		ED69696E45FF452B989FBB1F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				EXECUTABLE_PREFIX = "";
+				EXECUTABLE_SUFFIX = "";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = "'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'";
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = (
+					/Users/jernej/repo/arbot/sim/test/..,
+					"/Volumes/DataHD/MacOs/jernej/Developer/FANN-2.2.0-Source/src/include",
+				);
+				INSTALL_PATH = "";
+				LIBRARY_SEARCH_PATHS = "";
+				OTHER_CFLAGS = "    ";
+				OTHER_CPLUSPLUSFLAGS = (
+					"-std=c++11",
+					"-stdlib=libc++",
+				);
+				OTHER_LDFLAGS = (
+					"-Wl,-search_paths_first",
+					"-Wl,-headerpad_max_install_names",
+				);
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = helloDemo;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/jernej/repo/arbot/sim/test/xcode;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = (
+					"-Wmost",
+					"-Wno-four-char-constants",
+					"-Wno-unknown-pragmas",
+				);
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		B330595332A74076A5C90316 /* Build configuration list for PBXProject "HELLO" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6E0B44050CED47838C9C3E33 /* Debug */,
+				3DB7DAF31C254001B3810760 /* Release */,
+				C2DDA4E650D348379A4B0DC2 /* MinSizeRel */,
+				D1FEC0A5DBD14F23A81B7674 /* RelWithDebInfo */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		C3ADCF0003484C1B875D40A8 /* Build configuration list for PBXNativeTarget "helloDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ED69696E45FF452B989FBB1F /* Debug */,
+				6CAF594BEB3A448CB735D0E3 /* Release */,
+				C40028517FDB45B386ACA7C3 /* MinSizeRel */,
+				46DF966B91804899A79E52C5 /* RelWithDebInfo */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = BC442A1293FE41F39946070A /* Project object */;
+}
