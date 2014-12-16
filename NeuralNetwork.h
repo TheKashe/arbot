@@ -21,9 +21,10 @@ private:
 	
 	uint16_t* layersN;
 	uint16_t* layers;
-	float ***weightsVector;
-	float **activationsVector;
-	float **sumsVector;
+	float **activationsVector;			// there are a many as neurons + bias neurons
+	float **weightedInputsVector;		// as many as neurons
+	float **errorsVector;				// as many as neurons
+	float ***weightsVector;				// multiple per neuron
 	float *biases;
 public:
 	NeuralNetwork(byte layerCount, ...)
@@ -48,13 +49,15 @@ public:
 		weightsVector			= new float**[layersCount]; //layer 0 actually never has weights, but let's simplify
 		activationsVector		= new float*[layersCount];
 		activationsVector[0]	= new float[layers[0]];		//activations also exist on this level
-		sumsVector				= new float*[layersCount];
+		weightedInputsVector	= new float*[layersCount];
+		errorsVector			= new float*[layersCount];
 		
 		activationsVector[0][layers[0]-1]=1;				//bias neuron for layer 0
 		for(byte l=1;l<layersCount;l++){
-			weightsVector[l]=new float*[layersN[l]];
-			activationsVector[l]=new float[layers[l]];
-			sumsVector[l]=new float[layersN[l]];
+			weightsVector[l]		= new float*[layersN[l]];
+			activationsVector[l]	= new float[layers[l]];
+			weightedInputsVector[l]	= new float[layersN[l]];
+			errorsVector[l]			= new float[layersN[l]];
 			for(uint16_t j=0;j<layersN[l];j++){
 				weightsVector[l][j]=new float[layers[l-1]];
 			}
@@ -85,21 +88,27 @@ public:
 	}
 	
 	void randomize(){
-		//TODO
+		for(byte l=1;l<layersCount;l++){					//l=layer
+			for(uint16_t j=0;j<layersN[l];j++){				//j=neuron
+				for(uint16_t k=0;k<layers[l-1];k++){
+					weightsVector[l][j][k]=RND*10-5;
+				}
+			}
+		}
 	}
 	
-	void calculate(float* inputs, float* outputs, float* vectors=NULL){
+	void calculate(float* inputs, float* outputs){
 		for(byte k=0;k<layersN[0];k++){
 			activationsVector[0][k]=inputs[k];					//first i activations are inputs..
 		}
 			
 		for(byte l=1;l<layersCount;l++){					//l=layer
 			for(uint16_t j=0;j<layersN[l];j++){				//j=neuron
-				sumsVector[l][j]=0;
+				weightedInputsVector[l][j]=0;
 				for(uint16_t k=0;k<layers[l-1];k++){
-					sumsVector[l][j]+=weightsVector[l][j][k]*activationsVector[l-1][k];
+					weightedInputsVector[l][j]+=weightsVector[l][j][k]*activationsVector[l-1][k];
 				}
-				activationsVector[l][j]=transferSigmoid(-sumsVector[l][j]);
+				activationsVector[l][j]=transferSigmoid(-weightedInputsVector[l][j]);
 			}
 		}
 		
@@ -108,8 +117,31 @@ public:
 		}
 	}
 	
-	void backprop(float* inputs, float* targets){
-		//TODO
+	
+	void backprop(float* targets, float learningRate){
+		//1. do backprop for output layer
+		byte l=layersCount-1;
+		for(uint16_t j=0;j<layersN[l];j++){				//j=neuron
+			errorsVector[l][j] =  targets[j]-activationsVector[l][j];				//E'=(t-y)
+			errorsVector[l][j] *= derivativeSigmoid(weightedInputsVector[l][j]);  //S'
+			for(uint16_t k=0;k<layers[l-1];k++){
+				weightsVector[l][j][k]+=learningRate*errorsVector[l][j]*weightedInputsVector[l][j];
+			}
+		}
+		//2. do the hidden layers
+		for(l--;l>0;l--){								//l je layer
+			for(uint16_t j=0;j<layersN[l];j++){			//j = neuron
+				errorsVector[l][j]=0;
+				for(uint16_t d=0;d<layersN[l+1];d++){	//d = neuron on a higher level (closer to output)
+					errorsVector[l][j]+=errorsVector[l+1][d]*weightsVector[l+1][d][j];
+					//errorsVector[l][j] *= derivativeSigmoid(weightedInputsVector[l+1][j]);
+				}
+				errorsVector[l][j] *= derivativeSigmoid(weightedInputsVector[l][j]);
+				for(uint16_t k=0;k<layers[l-1];k++){
+					weightsVector[l][j][k]+=learningRate*errorsVector[l][j]*weightedInputsVector[l][j];
+				}
+			}
+		}
 	}
 	
 	static float transferSigmoid(float input){
@@ -117,7 +149,7 @@ public:
 		return output;
 	}
 	
-	static float primeSigmoid(float input){
+	static float derivativeSigmoid(float input){
 		float s=transferSigmoid(input);
 		return s*(1-s);	//http://www.ai.mit.edu/courses/6.892/lecture8-html/sld015.htm
 	}
