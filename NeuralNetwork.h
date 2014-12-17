@@ -138,7 +138,7 @@ public:
 		}
 		
 		//3.update weights
-		for(l=layersCount-1;l>0;l--){
+		for(l=1;l<layersCount;l++){
 			for(uint16_t j=0;j<layersN[l];j++){
 				for(uint16_t u=0;u<layers[l-1];u++){//u = upstream neuron, closer to input
 					float delta_w=neurons[l][j].error*neurons[l-1][u].activation*learningRate;
