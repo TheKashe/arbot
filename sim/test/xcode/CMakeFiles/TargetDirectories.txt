@@ -1,3 +1,0 @@
-/Users/jernej/repo/arbot/sim/test/xcode/CMakeFiles/ALL_BUILD.dir
-/Users/jernej/repo/arbot/sim/test/xcode/CMakeFiles/ZERO_CHECK.dir
-/Users/jernej/repo/arbot/sim/test/xcode/CMakeFiles/helloDemo.dir

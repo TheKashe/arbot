@@ -50,28 +50,13 @@ void plotResults(double* xData, double* yData, int dataSize) {
 
 
 int main(){
-	//printf("press enter to continue...");
-	//getchar();
-	NeuralNetwork nn(3,1,200,1);
-	float inputs[]={0.3};
-	float outputs[1];
-	float targets[]={0.572};
-	float err;
-	//float weights[]={0.1,0.2,0.3,0.4,0.5,0.6,0.7};
-	//nn.setWeights(&weights[0]);
+	NeuralNetwork nn(3,1,2,1);
 	nn.randomize();
-	int i=0;
-	nn.calculate(&inputs[0],&outputs[0]);
-	do{
-		nn.backprop(&targets[0],0.7);
-		nn.calculate(&inputs[0],&outputs[0]);
-		err=targets[0]-outputs[0];
-		err=err<0?-err:err;
-		std::cout << outputs[0] << ":"<< err << "\n";
-		i++;
-	}while(err>0.01 && i<1000);
+	float inputs[1];
+	float outputs[1];
+	
 
-	/*double xData[35000];
+	double xData[35000];
 	double yData[35000];
 	//plot net before training
 	uint32_t k=0;
@@ -84,35 +69,11 @@ int main(){
 	}
 	plotResults(&xData[0],&yData[0],k-1);
 	
+	//train
 	inputs[0]=0.3;
-	float target=0.572;
-	float err;
-	
-	int i=0;
-	nn.calculate(&inputs[0],&outputs[0]);
-	do{
-		outputs[0]=target;
-		nn.backprop(&outputs[0],1);
-		nn.calculate(&inputs[0],&outputs[0]);
-		err=outputs[0]-target;
-		err=err<0?-err:err;
-		std::cout << outputs[0] << ":"<< err << "\n";
-		i++;
-	}while(err>0.01 && i<100);
-	
-
-	
-	//plot net after training
-	k=0;
-	for(float i=-1;i<=1;i+=0.01){
-		inputs[0]=i;
-		nn.calculate(&inputs[0],&outputs[0]);
-		xData[k]=i;
-		yData[k]=outputs[0];
-		k++;
-	}
-	plotResults(&xData[0],&yData[0],k-1);*/
-		return 0;
+	outputs[0]=1;
+	nn.backprop(&inputs[0],&outputs[0]);
+	return 0;
 }
 
 #endif /* defined(__arbot__nn__) */

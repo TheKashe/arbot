@@ -1,177 +1,0 @@
-ThelloDemo
-v6
-r1
-cCheck dependencies
-cCompileC xcode/HELLO.build/Debug/helloDemo.build/Objects-normal/x86_64/backprop.o /Users/jernej/repo/arbot/sim/test/backprop.cpp normal x86_64 c++ com.apple.compilers.llvm.clang.1_0.compiler
-cLd /Users/jernej/repo/arbot/sim/test/xcode/Debug/helloDemo normal x86_64
-
-N/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk
-c000000005228144B00000000000000AA
-t1378358347
-s170
-
-N/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/SDKSettings.plist
-c000000005228143200000000000004B3
-t1378358322
-s1203
-
-N/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/CoreServices/SystemVersion.plist
-c000000005227ECC800000000000001DE
-t1378348232
-s478
-
-N/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib/libstdc++.6.0.9.dylib
-c00000000533B9F35000000000009E060
-t1396416309
-s647264
-
-N/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib/libstdc++.6.dylib
-c00000000533B9F35000000000009E060
-t1396416309
-s647264
-
-N/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib/libstdc++.dylib
-c00000000533B9F35000000000009E060
-t1396416309
-s647264
-
-N/Users/jernej/repo/arbot/sim/test/backprop.cpp
-c0000000054907C580000000000000A99
-t1418755160
-s2713
-
-N/Users/jernej/repo/arbot/sim/test/xcode/Debug/helloDemo
-t2
-s0
-
-N/Users/jernej/repo/arbot/sim/test/xcode/HELLO.build/Debug/helloDemo.build/Objects-normal/x86_64/backprop.o
-t1418756153
-s92184
-
-N/Users/jernej/repo/arbot/sim/test/xcode/HELLO.build/Debug/helloDemo.build/Objects-normal/x86_64/helloDemo.LinkFileList
-c0000000054908038000000000000006B
-t1418756152
-s107
-
-CBuild AST from /Users/jernej/repo/arbot/sim/test/backprop.cpp
-r0
-
-CCheck dependencies
-r0
-lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection18"Check dependencies18"Check dependencies5c39c7b8b740ba41^dee3ccb8b740ba41^---0#1#1#--18"Check dependencies36"A89FDE87-4790-4759-B21C-253F6311A33B-
-
-CCompileC xcode/HELLO.build/Debug/helloDemo.build/Objects-normal/x86_64/backprop.o /Users/jernej/repo/arbot/sim/test/backprop.cpp normal x86_64 c++ com.apple.compilers.llvm.clang.1_0.compiler
-s440448952.802302
-e440448953.524722
-r1
-xCompileC
-xxcode/HELLO.build/Debug/helloDemo.build/Objects-normal/x86_64/backprop.o
-x/Users/jernej/repo/arbot/sim/test/backprop.cpp
-xnormal
-xx86_64
-xc++
-xcom.apple.compilers.llvm.clang.1_0.compiler
-d/Users/jernej/repo/arbot/sim/test/backprop.cpp
-d/Users/jernej/repo/arbot/sim/arduino_port/Arduino.h
-d/Volumes/DataHD/MacOs/jernej/Developer/FANN-2.2.0-Source/src/include/fann.h
-d/Volumes/DataHD/MacOs/jernej/Developer/FANN-2.2.0-Source/src/include/floatfann.h
-d/Volumes/DataHD/MacOs/jernej/Developer/FANN-2.2.0-Source/src/include/fann_error.h
-d/Volumes/DataHD/MacOs/jernej/Developer/FANN-2.2.0-Source/src/include/fann_activation.h
-d/Volumes/DataHD/MacOs/jernej/Developer/FANN-2.2.0-Source/src/include/fann_data.h
-d/Volumes/DataHD/MacOs/jernej/Developer/FANN-2.2.0-Source/src/include/fann_internal.h
-d/Volumes/DataHD/MacOs/jernej/Developer/FANN-2.2.0-Source/src/include/fann_train.h
-d/Volumes/DataHD/MacOs/jernej/Developer/FANN-2.2.0-Source/src/include/fann_cascade.h
-d/Volumes/DataHD/MacOs/jernej/Developer/FANN-2.2.0-Source/src/include/fann_io.h
-d/Users/jernej/repo/arbot/NeuralNetwork.h
-oIn file included from /Users/jernej/repo/arbot/sim/test/backprop.cpp:17:
-o/Users/jernej/repo/arbot/sim/test/../../NeuralNetwork.h:42:29: warning: second argument to 'va_arg' is of promotable type 'uint16_t' (aka 'unsigned short'); this va_arg has undefined behavior because arguments will be promoted to 'int' [-Wvarargs]
-o                        layers[i]=va_arg (param, uint16_t);
-o                                                 ^~~~~~~~
-oIn file included from /Users/jernej/repo/arbot/sim/test/backprop.cpp:14:
-oIn file included from /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/iostream:38:
-oIn file included from /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/ios:215:
-oIn file included from /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/iosfwd:90:
-oIn file included from /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/include/wchar.h:113:
-o/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/clang/5.1/include/stdarg.h:35:50: note: expanded from macro 'va_arg'
-o#define va_arg(ap, type)    __builtin_va_arg(ap, type)
-o                                                 ^
-o/Users/jernej/repo/arbot/sim/test/backprop.cpp:30:21: warning: conversion from string literal to 'char *' is deprecated [-Wdeprecated-writable-strings]
-o        tempDataFileName = "tempData";
-o                           ^
-o/Users/jernej/repo/arbot/sim/test/backprop.cpp:28:9: warning: unused variable 'x' [-Wunused-variable]
-o        double x,y;
-o               ^
-o/Users/jernej/repo/arbot/sim/test/backprop.cpp:28:11: warning: unused variable 'y' [-Wunused-variable]
-o        double x,y;
-o                 ^
-o4 warnings generated.
-lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection54"Compile /Users/jernej/repo/arbot/sim/test/backprop.cpp156"CompileC xcode/HELLO.build/Debug/helloDemo.build/Objects-normal/x86_64/backprop.o backprop.cpp normal x86_64 c++ com.apple.compilers.llvm.clang.1_0.compiler577acdb8b740ba41^045686b9b740ba41^-1852"In file included from /Users/jernej/repo/arbot/sim/test/backprop.cpp:17:/Users/jernej/repo/arbot/sim/test/../../NeuralNetwork.h:42:29: warning: second argument to 'va_arg' is of promotable type 'uint16_t' (aka 'unsigned short'); this va_arg has undefined behavior because arguments will be promoted to 'int' [-Wvarargs]                        layers[i]=va_arg (param, uint16_t);                                                 ^~~~~~~~In file included from /Users/jernej/repo/arbot/sim/test/backprop.cpp:14:In file included from /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/iostream:38:In file included from /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/ios:215:In file included from /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1/iosfwd:90:In file included from /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/include/wchar.h:113:/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/clang/5.1/include/stdarg.h:35:50: note: expanded from macro 'va_arg'#define va_arg(ap, type)    __builtin_va_arg(ap, type)                                                 ^/Users/jernej/repo/arbot/sim/test/backprop.cpp:30:21: warning: conversion from string literal to 'char *' is deprecated [-Wdeprecated-writable-strings]        tempDataFileName = "tempData";                           ^/Users/jernej/repo/arbot/sim/test/backprop.cpp:28:9: warning: unused variable 'x' [-Wunused-variable]        double x,y;               ^/Users/jernej/repo/arbot/sim/test/backprop.cpp:28:11: warning: unused variable 'y' [-Wunused-variable]        double x,y;                 ^4 warnings generated.4(36%IDEClangDiagnosticActivityLogMessage2@163"Second argument to 'va_arg' is of promotable type 'uint16_t' (aka 'unsigned short'); this va_arg has undefined behavior because arguments will be promoted to 'int'-440448953#18446744073709551615#0#2(2@72"In file included from /Users/jernej/repo/arbot/sim/test/backprop.cpp:17:-440448953#18446744073709551615#0#-0#27"com.apple.dt.IDE.diagnostic23%DVTTextDocumentLocation3@62"file://localhost/Users/jernej/repo/arbot/sim/test/backprop.cpp0000000000000000^16#9#16#9#472#0#21"Apple LLVM 5.0 Notice--2@28"Expanded from macro 'va_arg'-440448953#18446744073709551615#0#-0#27"com.apple.dt.IDE.diagnostic3@129"file://localhost/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/5.1/include/stdarg.h0000000000000000^34#49#34#49#1552#0#21"Apple LLVM 5.0 Notice--1#27"com.apple.dt.IDE.diagnostic3@56"file://localhost/Users/jernej/repo/arbot/NeuralNetwork.h0000000000000000^41#28#41#28#1076#0#14"Semantic Issue1(3@56"file://localhost/Users/jernej/repo/arbot/NeuralNetwork.h0000000000000000^41#28#41#36#1076#0#-2@56"Conversion from string literal to 'char *' is deprecated-440448953#18446744073709551615#0#-1#27"com.apple.dt.IDE.diagnostic3@62"file://localhost/Users/jernej/repo/arbot/sim/test/backprop.cpp0000000000000000^29#20#29#20#755#0#14"Semantic Issue--2@19"Unused variable 'x'-440448953#18446744073709551615#0#-1#27"com.apple.dt.IDE.diagnostic3@62"file://localhost/Users/jernej/repo/arbot/sim/test/backprop.cpp0000000000000000^27#8#27#8#722#0#19"Unused Entity Issue--2@19"Unused variable 'y'-440448953#18446744073709551615#0#-1#27"com.apple.dt.IDE.diagnostic3@62"file://localhost/Users/jernej/repo/arbot/sim/test/backprop.cpp0000000000000000^27#10#27#10#724#0#19"Unused Entity Issue--0#0#1#-19%DVTDocumentLocation4@62"file://localhost/Users/jernej/repo/arbot/sim/test/backprop.cpp0000000000000000^2176"CompileC xcode/HELLO.build/Debug/helloDemo.build/Objects-normal/x86_64/backprop.o backprop.cpp normal x86_64 c++ com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/jernej/repo/arbot/sim/test    export LANG=en_US.US-ASCII    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x c++ -arch x86_64 -fmessage-length=0 -fdiagnostics-show-note-include-stack -fmacro-backtrace-limit=0 -Wno-trigraphs -fpascal-strings -O0 -Wno-missing-field-initializers -Wno-missing-prototypes -Wno-return-type -Wno-non-virtual-dtor -Wno-overloaded-virtual -Wno-exit-time-destructors -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wno-unused-variable -Wunused-value -Wno-empty-body -Wno-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wno-constant-conversion -Wno-int-conversion -Wno-bool-conversion -Wno-enum-conversion -Wno-shorten-64-to-32 -Wno-newline-eof -Wno-c++11-extensions -DCMAKE_INTDIR=\"Debug\" -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk -fasm-blocks -fstrict-aliasing -Wdeprecated-declarations -Winvalid-offsetof -mmacosx-version-min=10.8 -g -Wno-sign-conversion -I/Users/jernej/repo/arbot/sim/test/xcode/Debug/include -I/Users/jernej/repo/arbot/sim/test/.. -I/Volumes/DataHD/MacOs/jernej/Developer/FANN-2.2.0-Source/src/include -I/Users/jernej/repo/arbot/sim/test/xcode/HELLO.build/Debug/helloDemo.build/DerivedSources/x86_64 -I/Users/jernej/repo/arbot/sim/test/xcode/HELLO.build/Debug/helloDemo.build/DerivedSources -Wmost -Wno-four-char-constants -Wno-unknown-pragmas -F/Users/jernej/repo/arbot/sim/test/xcode/Debug -std=c++11 -stdlib=libc++ -MMD -MT dependencies -MF /Users/jernej/repo/arbot/sim/test/xcode/HELLO.build/Debug/helloDemo.build/Objects-normal/x86_64/backprop.d --serialize-diagnostics /Users/jernej/repo/arbot/sim/test/xcode/HELLO.build/Debug/helloDemo.build/Objects-normal/x86_64/backprop.dia -c /Users/jernej/repo/arbot/sim/test/backprop.cpp -o /Users/jernej/repo/arbot/sim/test/xcode/HELLO.build/Debug/helloDemo.build/Objects-normal/x86_64/backprop.o36"C06FC5AE-844D-45B5-B2A7-70E3A0BA35C6-
-bBA847C14-ADE2-404A-A729-4D778CFEF5F1
-
-CLd /Users/jernej/repo/arbot/sim/test/xcode/Debug/helloDemo normal x86_64
-s440448953.533682
-e440448953.568966
-r0
-xLd
-x/Users/jernej/repo/arbot/sim/test/xcode/Debug/helloDemo
-xnormal
-xx86_64
-d/Users/jernej/repo/arbot/sim/test/xcode/HELLO.build/Debug/helloDemo.build/Objects-normal/x86_64/helloDemo.LinkFileList
-d/Users/jernej/repo/arbot/sim/test/xcode/HELLO.build/Debug/helloDemo.build/Objects-normal/x86_64/backprop.o
-d/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib/libstdc++.dylib
-d/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib/libstdc++.6.dylib
-d/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib/libstdc++.6.0.9.dylib
-d/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib/libSystem.dylib
-d/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/5.1/lib/darwin/libclang_rt.osx.a
-d/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib/system/libcache.dylib
-d/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib/system/libcommonCrypto.dylib
-d/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib/system/libcompiler_rt.dylib
-d/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib/system/libcopyfile.dylib
-d/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib/system/libdispatch.dylib
-d/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib/system/libdnsinfo.dylib
-d/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib/system/libdyld.dylib
-d/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib/system/libkeymgr.dylib
-d/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib/system/liblaunch.dylib
-d/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib/system/libmacho.dylib
-d/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib/system/libquarantine.dylib
-d/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib/system/libremovefile.dylib
-d/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib/system/libsystem_blocks.dylib
-d/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib/system/libsystem_c.dylib
-d/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib/system/libsystem_dnssd.dylib
-d/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib/system/libsystem_info.dylib
-d/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib/system/libsystem_kernel.dylib
-d/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib/system/libsystem_m.dylib
-d/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib/system/libsystem_network.dylib
-d/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib/system/libsystem_notify.dylib
-d/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib/system/libsystem_sandbox.dylib
-d/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib/system/libunc.dylib
-d/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib/system/libunwind.dylib
-d/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/lib/system/libxpc.dylib
-oUndefined symbols for architecture x86_64:
-o  "std::__1::locale::use_facet(std::__1::locale::id&) const", referenced from:
-o      std::__1::basic_ostream<char, std::__1::char_traits<char> >& std::__1::operator<<<std::__1::char_traits<char> >(std::__1::basic_ostream<char, std::__1::char_traits<char> >&, char const*) in backprop.o
-o  "std::__1::ios_base::getloc() const", referenced from:
-o      std::__1::basic_ostream<char, std::__1::char_traits<char> >& std::__1::operator<<<std::__1::char_traits<char> >(std::__1::basic_ostream<char, std::__1::char_traits<char> >&, char const*) in backprop.o
-o  "std::__1::basic_ostream<char, std::__1::char_traits<char> >::sentry::sentry(std::__1::basic_ostream<char, std::__1::char_traits<char> >&)", referenced from:
-o      std::__1::basic_ostream<char, std::__1::char_traits<char> >& std::__1::operator<<<std::__1::char_traits<char> >(std::__1::basic_ostream<char, std::__1::char_traits<char> >&, char const*) in backprop.o
-o  "std::__1::basic_ostream<char, std::__1::char_traits<char> >::sentry::~sentry()", referenced from:
-o      std::__1::basic_ostream<char, std::__1::char_traits<char> >& std::__1::operator<<<std::__1::char_traits<char> >(std::__1::basic_ostream<char, std::__1::char_traits<char> >&, char const*) in backprop.o
-o  "std::__1::basic_ostream<char, std::__1::char_traits<char> >::operator<<(float)", referenced from:
-o      _main in backprop.o
-o  "std::__1::cout", referenced from:
-o      _main in backprop.o
-o  "std::__1::ctype<char>::id", referenced from:
-o      std::__1::basic_ostream<char, std::__1::char_traits<char> >& std::__1::operator<<<std::__1::char_traits<char> >(std::__1::basic_ostream<char, std::__1::char_traits<char> >&, char const*) in backprop.o
-o  "std::__1::chrono::steady_clock::now()", referenced from:
-o      millis() in backprop.o
-o  "std::__1::locale::~locale()", referenced from:
-o      std::__1::basic_ostream<char, std::__1::char_traits<char> >& std::__1::operator<<<std::__1::char_traits<char> >(std::__1::basic_ostream<char, std::__1::char_traits<char> >&, char const*) in backprop.o
-o  "std::__1::ios_base::__set_badbit_and_consider_rethrow()", referenced from:
-o      std::__1::basic_ostream<char, std::__1::char_traits<char> >& std::__1::operator<<<std::__1::char_traits<char> >(std::__1::basic_ostream<char, std::__1::char_traits<char> >&, char const*) in backprop.o
-o  "std::__1::ios_base::clear(unsigned int)", referenced from:
-o      std::__1::basic_ostream<char, std::__1::char_traits<char> >& std::__1::operator<<<std::__1::char_traits<char> >(std::__1::basic_ostream<char, std::__1::char_traits<char> >&, char const*) in backprop.o
-old: symbol(s) not found for architecture x86_64
-oclang: error: linker command failed with exit code 1 (use -v to see invocation)
-lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection60"Link /Users/jernej/repo/arbot/sim/test/xcode/Debug/helloDemo38"Ld xcode/Debug/helloDemo normal x86_6425b188b9b740ba41^b5a691b9b740ba41^-2741"Undefined symbols for architecture x86_64:  "std::__1::locale::use_facet(std::__1::locale::id&) const", referenced from:      std::__1::basic_ostream<char, std::__1::char_traits<char> >& std::__1::operator<<<std::__1::char_traits<char> >(std::__1::basic_ostream<char, std::__1::char_traits<char> >&, char const*) in backprop.o  "std::__1::ios_base::getloc() const", referenced from:      std::__1::basic_ostream<char, std::__1::char_traits<char> >& std::__1::operator<<<std::__1::char_traits<char> >(std::__1::basic_ostream<char, std::__1::char_traits<char> >&, char const*) in backprop.o  "std::__1::basic_ostream<char, std::__1::char_traits<char> >::sentry::sentry(std::__1::basic_ostream<char, std::__1::char_traits<char> >&)", referenced from:      std::__1::basic_ostream<char, std::__1::char_traits<char> >& std::__1::operator<<<std::__1::char_traits<char> >(std::__1::basic_ostream<char, std::__1::char_traits<char> >&, char const*) in backprop.o  "std::__1::basic_ostream<char, std::__1::char_traits<char> >::sentry::~sentry()", referenced from:      std::__1::basic_ostream<char, std::__1::char_traits<char> >& std::__1::operator<<<std::__1::char_traits<char> >(std::__1::basic_ostream<char, std::__1::char_traits<char> >&, char const*) in backprop.o  "std::__1::basic_ostream<char, std::__1::char_traits<char> >::operator<<(float)", referenced from:      _main in backprop.o  "std::__1::cout", referenced from:      _main in backprop.o  "std::__1::ctype<char>::id", referenced from:      std::__1::basic_ostream<char, std::__1::char_traits<char> >& std::__1::operator<<<std::__1::char_traits<char> >(std::__1::basic_ostream<char, std::__1::char_traits<char> >&, char const*) in backprop.o  "std::__1::chrono::steady_clock::now()", referenced from:      millis() in backprop.o  "std::__1::locale::~locale()", referenced from:      std::__1::basic_ostream<char, std::__1::char_traits<char> >& std::__1::operator<<<std::__1::char_traits<char> >(std::__1::basic_ostream<char, std::__1::char_traits<char> >&, char const*) in backprop.o  "std::__1::ios_base::__set_badbit_and_consider_rethrow()", referenced from:      std::__1::basic_ostream<char, std::__1::char_traits<char> >& std::__1::operator<<<std::__1::char_traits<char> >(std::__1::basic_ostream<char, std::__1::char_traits<char> >&, char const*) in backprop.o  "std::__1::ios_base::clear(unsigned int)", referenced from:      std::__1::basic_ostream<char, std::__1::char_traits<char> >& std::__1::operator<<<std::__1::char_traits<char> >(std::__1::basic_ostream<char, std::__1::char_traits<char> >&, char const*) in backprop.old: symbol(s) not found for architecture x86_64clang: error: linker command failed with exit code 1 (use -v to see invocation)24(21%IDEActivityLogMessage2@76""std::__1::locale::use_facet(std::__1::locale::id&) const", referenced from:-440448953#43#79#-2#-23%DVTTextDocumentLocation3@-0000000000000000^18446744073709551615#18446744073709551615#18446744073709551615#18446744073709551615#18446744073709551615#0#30"Apple Mach-O Linker (ld) Error--2@200"Std::__1::basic_ostream<char, std::__1::char_traits<char> >& std::__1::operator<<<std::__1::char_traits<char> >(std::__1::basic_ostream<char, std::__1::char_traits<char> >&, char const*) in backprop.o-440448953#122#207#-0#-3@-0000000000000000^18446744073709551615#18446744073709551615#18446744073709551615#18446744073709551615#18446744073709551615#0#31"Apple Mach-O Linker (ld) Notice--2@54""std::__1::ios_base::getloc() const", referenced from:-440448953#329#57#-2#-3@-0000000000000000^18446744073709551615#18446744073709551615#18446744073709551615#18446744073709551615#18446744073709551615#0#30"Apple Mach-O Linker (ld) Error--2@200"Std::__1::basic_ostream<char, std::__1::char_traits<char> >& std::__1::operator<<<std::__1::char_traits<char> >(std::__1::basic_ostream<char, std::__1::char_traits<char> >&, char const*) in backprop.o-440448953#386#207#-0#-3@-0000000000000000^18446744073709551615#18446744073709551615#18446744073709551615#18446744073709551615#18446744073709551615#0#31"Apple Mach-O Linker (ld) Notice--2@157""std::__1::basic_ostream<char, std::__1::char_traits<char> >::sentry::sentry(std::__1::basic_ostream<char, std::__1::char_traits<char> >&)", referenced from:-440448953#593#160#-2#-3@-0000000000000000^18446744073709551615#18446744073709551615#18446744073709551615#18446744073709551615#18446744073709551615#0#30"Apple Mach-O Linker (ld) Error--2@200"Std::__1::basic_ostream<char, std::__1::char_traits<char> >& std::__1::operator<<<std::__1::char_traits<char> >(std::__1::basic_ostream<char, std::__1::char_traits<char> >&, char const*) in backprop.o-440448953#753#207#-0#-3@-0000000000000000^18446744073709551615#18446744073709551615#18446744073709551615#18446744073709551615#18446744073709551615#0#31"Apple Mach-O Linker (ld) Notice--2@98""std::__1::basic_ostream<char, std::__1::char_traits<char> >::sentry::~sentry()", referenced from:-440448953#960#101#-2#-3@-0000000000000000^18446744073709551615#18446744073709551615#18446744073709551615#18446744073709551615#18446744073709551615#0#30"Apple Mach-O Linker (ld) Error--2@200"Std::__1::basic_ostream<char, std::__1::char_traits<char> >& std::__1::operator<<<std::__1::char_traits<char> >(std::__1::basic_ostream<char, std::__1::char_traits<char> >&, char const*) in backprop.o-440448953#1061#207#-0#-3@-0000000000000000^18446744073709551615#18446744073709551615#18446744073709551615#18446744073709551615#18446744073709551615#0#31"Apple Mach-O Linker (ld) Notice--2@98""std::__1::basic_ostream<char, std::__1::char_traits<char> >::operator<<(float)", referenced from:-440448953#1268#101#-2#-3@-0000000000000000^18446744073709551615#18446744073709551615#18446744073709551615#18446744073709551615#18446744073709551615#0#30"Apple Mach-O Linker (ld) Error--2@19"_main in backprop.o-440448953#1369#26#-0#-3@-0000000000000000^18446744073709551615#18446744073709551615#18446744073709551615#18446744073709551615#18446744073709551615#0#31"Apple Mach-O Linker (ld) Notice--2@34""std::__1::cout", referenced from:-440448953#1395#37#-2#-3@-0000000000000000^18446744073709551615#18446744073709551615#18446744073709551615#18446744073709551615#18446744073709551615#0#30"Apple Mach-O Linker (ld) Error--2@19"_main in backprop.o-440448953#1432#26#-0#-3@-0000000000000000^18446744073709551615#18446744073709551615#18446744073709551615#18446744073709551615#18446744073709551615#0#31"Apple Mach-O Linker (ld) Notice--2@45""std::__1::ctype<char>::id", referenced from:-440448953#1458#48#-2#-3@-0000000000000000^18446744073709551615#18446744073709551615#18446744073709551615#18446744073709551615#18446744073709551615#0#30"Apple Mach-O Linker (ld) Error--2@200"Std::__1::basic_ostream<char, std::__1::char_traits<char> >& std::__1::operator<<<std::__1::char_traits<char> >(std::__1::basic_ostream<char, std::__1::char_traits<char> >&, char const*) in backprop.o-440448953#1506#207#-0#-3@-0000000000000000^18446744073709551615#18446744073709551615#18446744073709551615#18446744073709551615#18446744073709551615#0#31"Apple Mach-O Linker (ld) Notice--2@57""std::__1::chrono::steady_clock::now()", referenced from:-440448953#1713#60#-2#-3@-0000000000000000^18446744073709551615#18446744073709551615#18446744073709551615#18446744073709551615#18446744073709551615#0#30"Apple Mach-O Linker (ld) Error--2@22"Millis() in backprop.o-440448953#1773#29#-0#-3@-0000000000000000^18446744073709551615#18446744073709551615#18446744073709551615#18446744073709551615#18446744073709551615#0#31"Apple Mach-O Linker (ld) Notice--2@47""std::__1::locale::~locale()", referenced from:-440448953#1802#50#-2#-3@-0000000000000000^18446744073709551615#18446744073709551615#18446744073709551615#18446744073709551615#18446744073709551615#0#30"Apple Mach-O Linker (ld) Error--2@200"Std::__1::basic_ostream<char, std::__1::char_traits<char> >& std::__1::operator<<<std::__1::char_traits<char> >(std::__1::basic_ostream<char, std::__1::char_traits<char> >&, char const*) in backprop.o-440448953#1852#207#-0#-3@-0000000000000000^18446744073709551615#18446744073709551615#18446744073709551615#18446744073709551615#18446744073709551615#0#31"Apple Mach-O Linker (ld) Notice--2@75""std::__1::ios_base::__set_badbit_and_consider_rethrow()", referenced from:-440448953#2059#78#-2#-3@-0000000000000000^18446744073709551615#18446744073709551615#18446744073709551615#18446744073709551615#18446744073709551615#0#30"Apple Mach-O Linker (ld) Error--2@200"Std::__1::basic_ostream<char, std::__1::char_traits<char> >& std::__1::operator<<<std::__1::char_traits<char> >(std::__1::basic_ostream<char, std::__1::char_traits<char> >&, char const*) in backprop.o-440448953#2137#207#-0#-3@-0000000000000000^18446744073709551615#18446744073709551615#18446744073709551615#18446744073709551615#18446744073709551615#0#31"Apple Mach-O Linker (ld) Notice--2@59""std::__1::ios_base::clear(unsigned int)", referenced from:-440448953#2344#62#-2#-3@-0000000000000000^18446744073709551615#18446744073709551615#18446744073709551615#18446744073709551615#18446744073709551615#0#30"Apple Mach-O Linker (ld) Error--2@200"Std::__1::basic_ostream<char, std::__1::char_traits<char> >& std::__1::operator<<<std::__1::char_traits<char> >(std::__1::basic_ostream<char, std::__1::char_traits<char> >&, char const*) in backprop.o-440448953#2406#207#-0#-3@-0000000000000000^18446744073709551615#18446744073709551615#18446744073709551615#18446744073709551615#18446744073709551615#0#31"Apple Mach-O Linker (ld) Notice--2@43"Symbol(s) not found for architecture x86_64-440448953#2613#48#-0#-3@-0000000000000000^18446744073709551615#18446744073709551615#18446744073709551615#18446744073709551615#18446744073709551615#0#31"Apple Mach-O Linker (ld) Notice--2@65"Linker command failed with exit code 1 (use -v to see invocation)-440448953#2661#80#-2#-3@-0000000000000000^18446744073709551615#18446744073709551615#18446744073709551615#18446744073709551615#18446744073709551615#0#30"Apple Mach-O Linker (ld) Error--0#0#1#--905"Ld xcode/Debug/helloDemo normal x86_64    cd /Users/jernej/repo/arbot/sim/test    export MACOSX_DEPLOYMENT_TARGET=10.8    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ -arch x86_64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk -L/Users/jernej/repo/arbot/sim/test/xcode/Debug -F/Users/jernej/repo/arbot/sim/test/xcode/Debug -filelist /Users/jernej/repo/arbot/sim/test/xcode/HELLO.build/Debug/helloDemo.build/Objects-normal/x86_64/helloDemo.LinkFileList -mmacosx-version-min=10.8 -Wl,-search_paths_first -Wl,-headerpad_max_install_names -lstdc++ -lstdc++.6 -lstdc++.6.0.9 -Xlinker -dependency_info -Xlinker /Users/jernej/repo/arbot/sim/test/xcode/HELLO.build/Debug/helloDemo.build/Objects-normal/x86_64/helloDemo_dependency_info.dat -o /Users/jernej/repo/arbot/sim/test/xcode/Debug/helloDemo36"D1804EC9-EA0D-47DE-97B3-D146F21BF51A-
-bBA847C14-ADE2-404A-A729-4D778CFEF5F1
-
