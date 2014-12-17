@@ -15,6 +15,8 @@
 
 #define OUTPUTS (layers[layersCount-1])
 
+
+
 typedef struct{
 	float activation;					// there are a many as neurons + bias neurons
 	float error;						// as many as neurons
@@ -27,10 +29,12 @@ private:
 	Neuron**	neurons;
 	uint16_t*	layersN;
 	uint16_t*	layers;
+	float		steepness;
 public:
 	NeuralNetwork(byte layerCount, ...)
 	{
 		layersCount			= layerCount;
+		steepness			= 0.5; //for now magic number
 		
 		layers	= new uint16_t[layerCount];
 		layersN	= new uint16_t[layerCount];
@@ -103,7 +107,7 @@ public:
 				for(uint16_t k=0;k<layers[l-1];k++){
 					weightedInput+=n->weights[k]*neurons[l-1][k].activation;
 				}
-				n->activation=transferSigmoid(weightedInput*0.5); //0.5=steepness
+				n->activation=transferSigmoid(weightedInput*steepness);
 			}
 		}
 		
@@ -121,7 +125,7 @@ public:
 			//FANN does sth in between
 			//supposedly this log is a must for more than 1 output value
 			neurons[l][j].error=log((1.0 + neurons[l][j].error) / (1.0 - neurons[l][j].error));
-			neurons[l][j].error *= derivativeSigmoid(neurons[l][j].activation);
+			neurons[l][j].error *= derivativeSigmoid(neurons[l][j].activation, steepness);
 			/*for(uint16_t k=0;k<layers[l-1];k++){
 				neurons[l][j].weights[k]+=learningRate*neurons[l][j].error*neurons[l][j].weightedInput;
 			}*/
@@ -155,10 +159,10 @@ public:
 	}
 	
 	//because neuron value already IS sigmoid, just use input to get the derrivative
-	static float derivativeSigmoid(float input){
+	static float derivativeSigmoid(float input,float steepness){
 		//input needs to be clipped, or we'll converge towards 1/0
 		input=input<0.01?0.1:input>0.99?0.99:input;
-		return 2*0.5*input*(1-input);	//0.5 for steepness
+		return 2*steepness*input*(1-input);	//0.5 for steepness
 	}
 };
 
