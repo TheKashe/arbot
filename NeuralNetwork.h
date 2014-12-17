@@ -104,7 +104,7 @@ public:
 			for(uint16_t j=0;j<layersN[l];j++){				//j=neuron
 				Neuron* n=&neurons[l][j];
 				float weightedInput=0;
-				for(uint16_t k=0;k<layers[l-1];k++){
+				for(int16_t k=layers[l-1]-1;k>=0;k--){
 					weightedInput+=n->weights[k]*neurons[l-1][k].activation;
 				}
 				n->activation=transferSigmoid(weightedInput*steepness);
@@ -137,7 +137,7 @@ public:
 				for(uint16_t d=0;d<layersN[l+1];d++){		//d = neuron on a downstream level (closer to output)
 					neurons[l][j].error+=neurons[l+1][d].error*neurons[l+1][d].weights[j];
 				}
-				neurons[l][j].error *= derivativeSigmoid(neurons[l][j].activation);
+				neurons[l][j].error *= derivativeSigmoid(neurons[l][j].activation,steepness);
 			}
 		}
 		
@@ -147,6 +147,7 @@ public:
 				for(uint16_t u=0;u<layers[l-1];u++){//u = upstream neuron, closer to input
 					float delta_w=neurons[l][j].error*neurons[l-1][u].activation*learningRate;
 					neurons[l][j].weights[u] +=delta_w;
+					printf("%f, ",neurons[l][j].weights[u]);
 				}
 			}
 		}
