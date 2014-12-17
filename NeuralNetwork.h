@@ -17,10 +17,8 @@
 
 typedef struct{
 	float activation;					// there are a many as neurons + bias neurons
-	float weightedInput;				// as many as neurons
 	float error;						// as many as neurons
 	float *weights;						// multiple per neuron
-	float *weightDeltas;				// multiple per neuron
 } Neuron;
 
 class NeuralNetwork{
@@ -49,7 +47,7 @@ public:
 		va_end (param);
 	
 		//transpose weights to multidemensional vector
-		neurons					= new Neuron*[layersCount];
+		neurons	= new Neuron*[layersCount];
 		for(byte l=0;l<layersCount;l++){
 			neurons[l] = new Neuron[l==layersCount-1?layersN[l]:layers[l]];
 			uint16_t j = 0;
@@ -57,7 +55,6 @@ public:
 				//inputs don't have weights
 				if(l>0){
 					neurons[l][j].weights=new float[layers[l-1]];
-					neurons[l][j].weightDeltas=new float[layers[l-1]];
 				}
 			}
 			//bias neuron for all but last layers
@@ -88,7 +85,7 @@ public:
 		for(byte l=1;l<layersCount;l++){					//l=layer
 			for(uint16_t j=0;j<layersN[l];j++){				//j=neuron
 				for(uint16_t k=0;k<layers[l-1];k++){
-					neurons[l][j].weights[k]=RND*10-5;
+					neurons[l][j].weights[k]=RND/5-0.1;
 				}
 			}
 		}
@@ -102,11 +99,11 @@ public:
 		for(byte l=1;l<layersCount;l++){					//l=layer
 			for(uint16_t j=0;j<layersN[l];j++){				//j=neuron
 				Neuron* n=&neurons[l][j];
-				n->weightedInput=0;
+				float weightedInput=0;
 				for(uint16_t k=0;k<layers[l-1];k++){
-					n->weightedInput+=n->weights[k]*neurons[l-1][k].activation;
+					weightedInput+=n->weights[k]*neurons[l-1][k].activation;
 				}
-				n->activation=transferSigmoid(n->weightedInput);
+				n->activation=transferSigmoid(weightedInput*0.5); //0.5=steepness
 			}
 		}
 		
@@ -122,43 +119,46 @@ public:
 		for(uint16_t j=0;j<layersN[l];j++){
 			neurons[l][j].error =  targets[j]-neurons[l][j].activation;			//E'=(t-y)
 			//FANN does sth in between
-			//supposedly this is a must for more than 1 output value
-			//neuron_diff = (fann_type) log((1.0 + neuron_diff) / (1.0 - neuron_diff));
+			//supposedly this log is a must for more than 1 output value
 			neurons[l][j].error=log((1.0 + neurons[l][j].error) / (1.0 - neurons[l][j].error));
 			neurons[l][j].error *= derivativeSigmoid(neurons[l][j].activation);
 			/*for(uint16_t k=0;k<layers[l-1];k++){
 				neurons[l][j].weights[k]+=learningRate*neurons[l][j].error*neurons[l][j].weightedInput;
 			}*/
 		}
-		//2. backprop + update weights
-		for(;l>0;l--){										//l je layer
+		//2. backprop
+		for(l--;l>0;l--){										//l je layer
 			for(uint16_t j=0;j<layersN[l];j++){				//j = neuron
-				if(l!=layersCount-1){
-					//backprop weights
-					neurons[l][j].error=0;
-					for(uint16_t d=0;d<layersN[l+1];d++){		//d = neuron on a downstream level (closer to output)
-						neurons[l][j].error+=neurons[l+1][d].error*neurons[l+1][d].weights[j];
-					}
-					neurons[l][j].error *= derivativeSigmoid(neurons[l][j].activation);
+				neurons[l][j].error=0;
+				for(uint16_t d=0;d<layersN[l+1];d++){		//d = neuron on a downstream level (closer to output)
+					neurons[l][j].error+=neurons[l+1][d].error*neurons[l+1][d].weights[j];
 				}
-				//recalculate weights for hidden layers			//u = upstream neuron, closer to input
-				for(uint16_t u=0;u<layers[l-1];u++){
-					neurons[l][j].weights[u] += neurons[l][j].error*neurons[l-1][u].activation*learningRate;
-				}
+				neurons[l][j].error *= derivativeSigmoid(neurons[l][j].activation);
 			}
 		}
 		
 		//3.update weights
+		for(l=layersCount-1;l>0;l--){
+			for(uint16_t j=0;j<layersN[l];j++){
+				for(uint16_t u=0;u<layers[l-1];u++){//u = upstream neuron, closer to input
+					float delta_w=neurons[l][j].error*neurons[l-1][u].activation*learningRate;
+					neurons[l][j].weights[u] +=delta_w;
+				}
+			}
+		}
 	}
 	
 	static float transferSigmoid(float input){
-		float output=1/(1+pow(M_E,-input));
+		//input=input<-0.98?-0.98:input>0.98?0.98:input;
+		float output=1/(1+pow(M_E,-input*2));
 		return output;
 	}
 	
 	//because neuron value already IS sigmoid, just use input to get the derrivative
 	static float derivativeSigmoid(float input){
-		return input*(1-input);	//http://www.ai.mit.edu/courses/6.892/lecture8-html/sld015.htm
+		//input needs to be clipped, or we'll converge towards 1/0
+		input=input<0.01?0.1:input>0.99?0.99:input;
+		return 2*0.5*input*(1-input);	//0.5 for steepness
 	}
 };
 
